@@ -3,14 +3,14 @@ import { useRouter } from "next/navigation";
 import { authApi } from "../api/auth.api";
 import useAuthStore from "../store/auth.store";
 import { LoginRequest } from "../types/auth.types";
-import useNotify from "@/features/alert/hooks/use-notify";
+import useAlert from "@/features/alert/hooks/use-alert";
 import getErrorMessage from "@/lib/api/error";
 
 const useLogin = () => {
   const router = useRouter();
   const setUser = useAuthStore((s) => s.setUser);
   const setTokens = useAuthStore((s) => s.setTokens);
-  const { success, error } = useNotify();
+  const { success, error } = useAlert();
 
   return useMutation({
     mutationFn: (payload: LoginRequest) => authApi.login(payload),
