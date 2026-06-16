@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { authApi } from "../api/auth.api";
 import { UpdatePasswordRequest } from "../types/auth.types";
-import useNotify from "@/features/alert/hooks/use-notify";
+import useAlert from "@/features/alert/hooks/use-alert";
 import getErrorMessage from "@/lib/api/error";
 
 const useUpdatePassword = () => {
-  const { success, error } = useNotify();
+  const { success, error } = useAlert();
   return useMutation({
     mutationFn: (payload: UpdatePasswordRequest) => authApi.updatePassword(payload),
     onSuccess: () => {

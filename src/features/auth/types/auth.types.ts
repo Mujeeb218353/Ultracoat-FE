@@ -51,7 +51,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   theme: "light" | "dark";
   hasHydrated: boolean;
-  setUser: (user: User, isAuthenticated: boolean) => void;
+  setUser: (user: User) => void;
   setTokens: (accessToken: string | null, refreshToken: string | null) => void;
   setTheme: (theme: "light" | "dark") => void;
   clearAuth: () => void;

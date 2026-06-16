@@ -2,12 +2,12 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { authApi } from "../api/auth.api";
 import { ResetPasswordRequest } from "../types/auth.types";
-import useNotify from "@/features/alert/hooks/use-notify";
+import useAlert from "@/features/alert/hooks/use-alert";
 import getErrorMessage from "@/lib/api/error";
 
 const useResetPassword = () => {
   const router = useRouter();
-  const { success, error } = useNotify();
+  const { success, error } = useAlert();
 
   return useMutation({
     mutationFn: (payload: ResetPasswordRequest) => authApi.resetPassword(payload),

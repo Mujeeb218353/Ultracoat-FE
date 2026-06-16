@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { authApi } from "../api/auth.api";
-import useNotify from "@/features/alert/hooks/use-notify";
+import useAlert from "@/features/alert/hooks/use-alert";
 import getErrorMessage from "@/lib/api/error";
 
 const useSendVerificationEmail = () => {
-  const { success, error } = useNotify();
+  const { success, error } = useAlert();
   return useMutation({
     mutationFn: () => authApi.sendVerificationEmail(),
     onSuccess: () => {

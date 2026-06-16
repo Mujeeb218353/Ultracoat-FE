@@ -71,7 +71,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             setCollapsed={setCollapsed}
             toggleBtnRef={toggleBtnRef}
             isMobile={isMobile}
-            user={user}
+            user={{
+              name: user?.name || "Guest User",
+              role: user?.role || "Guest",
+            }}
           />
           <Content className="flex-1 flex flex-col overflow-y-scroll">
             <div className="flex-1 flex justify-center pt-18 bg-white dark:bg-[#141414] text-black dark:text-white">
