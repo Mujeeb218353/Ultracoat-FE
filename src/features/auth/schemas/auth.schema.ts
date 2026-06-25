@@ -9,7 +9,7 @@ export const forgotPasswordSchema = z.object({
   email: z.email("Enter a valid email"),
 });
 
-export const verifyCodeSchema = z.object({
+export const verifyEmailSchema = z.object({
   otp: z.string().length(4, "Code must be 4 digits"),
 });
 
