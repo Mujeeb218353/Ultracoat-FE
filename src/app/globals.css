@@ -38,3 +38,13 @@ body {
 .ant-typography {
   margin-bottom: 0 !important;
 }
+
+.ant-otp-input::-webkit-outer-spin-button,
+.ant-otp-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ant-otp-input[type="number"] {
+  -moz-appearance: textfield;
+}
