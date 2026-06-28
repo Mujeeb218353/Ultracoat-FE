@@ -155,12 +155,7 @@ const ResetPasswordForm = () => {
           <div className="w-full max-w-64 flex flex-col gap-1.5">
             <div className="h-1 w-full rounded-full bg-white/10 overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-1000 ease-linear ${
-                  isOtpExpired
-                    ? "bg-red-500"
-                    : isExpiringSoon
-                      ? "bg-amber-500"
-                      : "bg-[#018739]"
+                className={`h-full rounded-full transition-all duration-1000 ease-linear ${isOtpExpired ? "bg-red-500" : isExpiringSoon ? "bg-amber-500" : "bg-[#018739]"
                 }`}
                 style={{ width: `${progressPercent}%` }}
               />
@@ -189,9 +184,7 @@ const ResetPasswordForm = () => {
               icon={<RotateCw size={12} />}
               className="text-xs! text-blue-400! disabled:text-white/30! flex! items-center! gap-1.5! p-0! h-auto!"
             >
-              {resendCooldown > 0
-                ? `Resend in ${resendCooldown}s`
-                : "Resend code"}
+              {"Resend code"}
             </Button>
           )}
         </div>
