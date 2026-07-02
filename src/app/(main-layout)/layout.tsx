@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import { useUser } from "@/features/auth/selectors/auth.selector";
 import { Layout } from "antd";
 import { useEffect, useRef, useState } from "react";
+import EmailVerification from "@/features/auth/components/EmailVerification";
 
 const { Content } = Layout;
 
@@ -78,7 +79,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           />
           <Content className="flex-1 flex flex-col overflow-y-scroll">
             <div className="flex-1 flex justify-center pt-18 bg-white dark:bg-[#141414] text-black dark:text-white">
-              {children}
+              {user && !user.isVerified ? <EmailVerification /> : children}
             </div>
           </Content>
         </Layout>

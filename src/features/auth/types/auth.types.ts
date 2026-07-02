@@ -5,7 +5,7 @@ import {
   resetPasswordSchema, 
   updatePasswordSchema, 
   updateProfileSchema, 
-  verifyCodeSchema 
+  verifyEmailSchema 
 } from "../schemas/auth.schema";
 
 export type Role = "ADMIN";
@@ -44,13 +44,14 @@ export type ForgotPasswordRequest = z.infer<typeof forgotPasswordSchema>;
 
 export type ResetPasswordRequest = Omit<z.infer<typeof resetPasswordSchema>, "confirmPassword">;
 
-export type VerifyEmailRequest = z.infer<typeof verifyCodeSchema>;
+export type VerifyEmailRequest = z.infer<typeof verifyEmailSchema>;
 
 export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   theme: "light" | "dark";
   hasHydrated: boolean;
+  patchUser: (partial: Partial<User>) => void;
   setUser: (user: User) => void;
   setTokens: (accessToken: string | null, refreshToken: string | null) => void;
   setTheme: (theme: "light" | "dark") => void;

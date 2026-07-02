@@ -6,7 +6,7 @@ const authEndpoints = {
   refreshToken: "/auth/refresh-token",
   updateProfile: "/auth/profile",
   updatePassword: "/auth/password",
-  sendVerificationEmail: "/auth/send-verification-email",
+  sendVerificationEmail: "/auth/send-email-verification-mail",
   verifyEmail: "/auth/verify-email",
 
   forgotPassword: "/auth/forgot-password",

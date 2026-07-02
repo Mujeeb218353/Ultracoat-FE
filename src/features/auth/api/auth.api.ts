@@ -19,7 +19,7 @@ export const authApi = {
   refreshToken: () => api.post<ApiResponse<AuthTokens>>(authEndpoints.refreshToken).then((res) => res.data.data),
   updateProfile: (payload: UpdateProfileRequest) => api.put<ApiResponse<UpdateProfileResponse>>(authEndpoints.updateProfile, payload).then((res) => res.data.data.user),
   updatePassword: (payload: UpdatePasswordRequest) =>api.put(authEndpoints.updatePassword, payload).then((res) => res.data),
-  sendVerificationEmail: () =>api.post(authEndpoints.sendVerificationEmail).then((res) => res.data),
+  sendVerificationEmail: () =>api.get(authEndpoints.sendVerificationEmail).then((res) => res.data),
   verifyEmail: (payload: VerifyEmailRequest) =>api.post(authEndpoints.verifyEmail, payload).then((res) => res.data),
   
   forgotPassword: (payload: ForgotPasswordRequest) => api.post(authEndpoints.forgotPassword, payload).then((res) => res.data),

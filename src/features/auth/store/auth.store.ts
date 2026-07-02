@@ -23,11 +23,17 @@ function writeTokenCookies(accessToken: string | null, refreshToken: string | nu
 
 const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isAuthenticated: false,
       theme: "light",
       hasHydrated: false,
+
+      patchUser: (partial) => {
+        const currentUser = get().user;
+        if (!currentUser) return;
+        set({ user: { ...currentUser, ...partial } });
+      },
 
       setUser: (user) => set({ user, isAuthenticated: Boolean(user) }),
       setTokens: (accessToken, refreshToken) => {
