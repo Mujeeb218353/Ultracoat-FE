@@ -26,7 +26,6 @@ const useAuthStore = create<AuthState>()(
     (set, get) => ({
       user: null,
       isAuthenticated: false,
-      theme: "light",
       hasHydrated: false,
 
       patchUser: (partial) => {
@@ -40,7 +39,6 @@ const useAuthStore = create<AuthState>()(
         writeTokenCookies(accessToken, refreshToken);
         set({ isAuthenticated: Boolean(accessToken) });
       },
-      setTheme: (theme) => set({ theme }),
       clearAuth: () => {
         writeTokenCookies(null, null);
         set({ user: null, isAuthenticated: false });
@@ -53,7 +51,6 @@ const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         user: state.user,
         isAuthenticated: state.isAuthenticated,
-        theme: state.theme,
       }),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);

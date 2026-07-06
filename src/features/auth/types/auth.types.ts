@@ -49,12 +49,10 @@ export type VerifyEmailRequest = z.infer<typeof verifyEmailSchema>;
 export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
-  theme: "light" | "dark";
   hasHydrated: boolean;
   patchUser: (partial: Partial<User>) => void;
   setUser: (user: User) => void;
   setTokens: (accessToken: string | null, refreshToken: string | null) => void;
-  setTheme: (theme: "light" | "dark") => void;
   clearAuth: () => void;
   setHasHydrated: (state: boolean) => void;
 }
