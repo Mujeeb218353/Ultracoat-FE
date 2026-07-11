@@ -86,7 +86,7 @@ const LoginForm = () => {
 
         <Flex justify="space-between" align="center" className="text-sm pt-1">
           <Form.Item name="remember" valuePropName="checked" className="m-0!">
-            <Checkbox size="small" className="[&_.ant-checkbox-inner]:bg-[#142131]/30! [&_.ant-checkbox-inner]:border-white/20!">
+            <Checkbox className="[&_.ant-checkbox-inner]:bg-[#142131]/30! [&_.ant-checkbox-inner]:border-white/20!">
               <span className="text-white/70! text-xs!">Remember me</span>
             </Checkbox>
           </Form.Item>

@@ -7,9 +7,16 @@ import { usePathname } from "next/navigation";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
-}
+};
 
-const formTitles = {
+interface FormTitles {
+  [key: string]: {
+    title: string;
+    icon: React.ReactNode;
+  };
+};
+
+const formTitles: FormTitles = {
   "login": {
     title: "SECURE LOGIN",
     icon: <ShieldCheck className="size-6 text-[#018739]" />,
@@ -22,9 +29,9 @@ const formTitles = {
     title: "RESET PASSWORD",
     icon: <LockKeyhole className="size-6 text-[#018739]" />,
   },
-}
+};
 
-export default function AuthLayout({ children }: AuthLayoutProps) {
+const AuthLayout = ({ children }: AuthLayoutProps) => {
   const pathname = usePathname();
   const currentPath = pathname.split("/")[2] || "login";
   const { title, icon } = formTitles[currentPath] || formTitles["login"];
@@ -78,4 +85,6 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       </p>
     </div>
   );
-}
+};
+
+export default AuthLayout;
