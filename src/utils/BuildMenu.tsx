@@ -1,4 +1,4 @@
-import { LogOut } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { RoleConfig, MenuItem } from "@/config/RoleConfig";
 import type { MenuProps } from "antd";
 import Link from "next/link";
@@ -25,20 +25,10 @@ const BuildMenuItems = (
 
   const { basePath, groups } = roleConfig;
   const items: ItemType[] = [];
-  let hasSupportGroup = false;
-  
-  const logoutItem: ItemType = {
-    key: "logout",
-    icon: <LogOut size={15} />,
-    label: <span className={`font-semibold! text-xs!`}>Logout</span>,
-    danger: !collapsed,
-  };
 
   groups.forEach((group: typeof roleConfig.groups[0]) => {
 
     if (group.groupLabel) {
-      const isSupportGroup = group.groupLabel.toUpperCase() === "SUPPORT";
-      if (isSupportGroup) hasSupportGroup = true;
 
       items.push({
         type: "group",
@@ -53,7 +43,6 @@ const BuildMenuItems = (
           : 
           buildLeaf(item, basePath)
           ),
-          ...(isSupportGroup ? [logoutItem] : []),
         ],
       });
     } else {
@@ -75,13 +64,28 @@ const BuildMenuItems = (
     }
   });
 
-  if (!hasSupportGroup) {
-    items.push({
-      type: "group",
-      label: <span className={`text-xs font-semibold ${collapsed ? 'hidden' : 'block'}`}>SUPPORT</span>,
-      children: [logoutItem],
-    });
-  }
+  const profileItem: ItemType = buildLeaf(
+    {
+      key: "profile",
+      icon: <User size={15} />,
+      label: "Profile",
+      path: "profile",
+    },
+    basePath
+  );
+
+  const logoutItem: ItemType = {
+    key: "logout",
+    icon: <LogOut size={15} />,
+    label: <span className={`font-semibold! text-xs!`}>Logout</span>,
+    danger: !collapsed,
+  };
+    
+  items.push({
+    type: "group",
+    label: <span className={`text-xs font-semibold ${collapsed ? 'hidden' : 'block'}`}>ACCOUNT</span>,
+    children: [profileItem, logoutItem],
+  });
 
   return items;
 };
