@@ -6,6 +6,7 @@ import { useUser } from "@/features/auth/selectors/auth.selector";
 import { Layout } from "antd";
 import { useEffect, useRef, useState } from "react";
 import EmailVerification from "@/features/auth/components/EmailVerification";
+import LogoutModal from "@/features/auth/components/LogoutModal";
 
 const { Content } = Layout;
 
@@ -21,6 +22,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [collapsed, setCollapsed] = useState<boolean>(true);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   
   useEffect(() => {
@@ -65,6 +67,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           sidebarRef={sidebarRef} 
           collapsed={collapsed} 
           isMobile={isMobile} 
+          setIsLogoutModalOpen={setIsLogoutModalOpen}
         />
         <Layout className="w-full! min-h-max flex flex-col overflow-x-scroll">
           <Navbar
@@ -78,11 +81,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             }}
           />
           <Content className="flex-1 flex flex-col overflow-y-scroll">
-            <div className="flex-1 flex justify-center pt-18 bg-white dark:bg-[#141414] text-black dark:text-white">
+            <div className="flex-1 flex justify-center pt-18 ">
               {user && !user.isVerified ? <EmailVerification /> : children}
             </div>
           </Content>
         </Layout>
+        <LogoutModal
+          isVisible={isLogoutModalOpen}
+          onClose={() => setIsLogoutModalOpen(false)}
+        />
       </Layout>
     </div>
   )
