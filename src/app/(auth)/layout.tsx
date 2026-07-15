@@ -73,7 +73,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
             {children}
             <div className="p-4 text-center text-xs">
               <Typography.Text className="text-white/40! text-xs!">
-                PSO Ultracoat Admin Portal
+                Ultracoat Admin Portal
               </Typography.Text>
             </div>
           </div>
@@ -81,7 +81,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
       </div>
 
       <p className="mb-4 text-center text-xs text-gray-400">
-        © {new Date().getFullYear()} PSO Ultracoat Marketing. All rights reserved.
+        © {new Date().getFullYear()} Ultracoat Marketing. All rights reserved.
       </p>
     </div>
   );

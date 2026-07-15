@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: "UltraCoat Pakistan",
     template: "%s | UltraCoat Pakistan",
   },
-  description: "PSO UltraCoat Admin Portal",
+  description: "UltraCoat Admin Portal",
   icons: {
     icon: "/ultra-coat-image.png",
     shortcut: "/ultra-coat-image.png",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "UltraCoat Pakistan",
-    description: "PSO UltraCoat Admin Portal",
+    description: "UltraCoat Admin Portal",
     siteName: "UltraCoat Pakistan",
     images: [
       {
