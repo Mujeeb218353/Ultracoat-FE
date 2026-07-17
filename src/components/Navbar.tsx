@@ -20,7 +20,7 @@ interface NavbarProps {
 const Navbar = ({ collapsed, setCollapsed, toggleBtnRef, isMobile, user }: NavbarProps) => {
   const hasHydrated = useHasHydrated();
   const mode = useThemeMode();
-  const headerBackground = mode === "light" ? "#ffffff" : "#141414";
+  const headerBackground = mode === "light" ? "#ffffff" : "#222222";
 
   if (!hasHydrated) {
     return <NavbarSkeleton collapsed={collapsed} isMobile={isMobile} />;
@@ -36,7 +36,7 @@ const Navbar = ({ collapsed, setCollapsed, toggleBtnRef, isMobile, user }: Navba
       }}
     >
       <Button
-        className="p-2! transition-all! duration-500! ease-in-out! border-none! bg-white! hover:bg-gray-100! dark:bg-zinc-900! dark:hover:bg-zinc-800! text-black! dark:text-white!"
+        className="p-1! h-8! w-8! rounded-lg! transition-all! duration-500! ease-in-out! border-none! bg-white! hover:bg-gray-100! dark:bg-zinc-800! dark:hover:bg-zinc-700! text-black! dark:text-white!"
         ref={toggleBtnRef}
         onClick={(event) => {
           event.stopPropagation();
