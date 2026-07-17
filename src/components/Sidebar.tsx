@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Layout, Menu } from "antd";
 import UltraCoatImg from "../../public/ultra-coat-image.png";
 import { Image } from "antd";
@@ -16,9 +17,10 @@ interface SidebarProps {
   sidebarRef: React.RefObject<HTMLDivElement | null>;
   collapsed: boolean;
   isMobile: boolean;
+  setIsLogoutModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Sidebar = ({ sidebarRef, collapsed, isMobile }: SidebarProps) => {
+const Sidebar = ({ sidebarRef, collapsed, isMobile, setIsLogoutModalOpen }: SidebarProps) => {
   const user = useUser();
   const location = usePathname();
   const hasHydrated = useHasHydrated();
@@ -66,6 +68,11 @@ const Sidebar = ({ sidebarRef, collapsed, isMobile }: SidebarProps) => {
               items={roleKey && roleConfig ? menuItems : []}
               selectedKeys={getSelectedMenuKeys(location)}
               className="w-full! border-none!"
+              onClick={(info) => {
+                if (info.key === "logout") {
+                  setIsLogoutModalOpen(true);
+                }
+              }}
             />
           ) : (
             <SidebarMenuSkeleton />
