@@ -1,37 +1,43 @@
 import type { ThemeConfig } from "antd";
 import type { ThemeMode } from "@/features/theme/store/theme.store";
 
-const PRIMARY = "#094c92";
-const PRIMARY_HOVER = "#0a5eaf";
-const PRIMARY_ACTIVE = "#073d77";
-const PRIMARY_BG = "#e8f0fb";
-const SECONDARY = "#ca3500";
+const PRIMARY = "#001259";
+const PRIMARY_HOVER = "#002875";
+const PRIMARY_ACTIVE = "#000c40";
+const PRIMARY_BG = "#ffffff";
+// const SECONDARY = "#ca3500";
 const SECONDARY_HOVER = "#e1460c";
 const SECONDARY_ACTIVE = "#a92b00";
 const SECONDARY_BG = "#fff1eb";
+
+const SELECTED_COLOR = "#1568DC";
+
+const DARK_BG = "#222222";
 
 const getCommonTokens = (darkModeEnabled: boolean) => ({
   colorPrimary: PRIMARY,
   colorPrimaryHover: PRIMARY_HOVER,
   colorPrimaryActive: PRIMARY_ACTIVE,
-  colorPrimaryBg: darkModeEnabled ? "#102a4d" : PRIMARY_BG,
+  colorPrimaryBg: darkModeEnabled ? "#2f2f2f" : PRIMARY_BG,
 
   fontSize: 12,
+
   colorText: darkModeEnabled ? "#f3f4f6" : "#111827",
   colorTextSecondary: darkModeEnabled ? "#cbd5e1" : "#6b7280",
   colorTextTertiary: darkModeEnabled ? "#94a3b8" : "#9ca3af",
   colorTextPlaceholder: darkModeEnabled ? "#94a3b8" : "#9ca3af",
 
-  colorBgContainer: darkModeEnabled ? "#111827" : "#ffffff",
-  colorBgLayout: darkModeEnabled ? "#0f172a" : "#f5f7fa",
-  colorBgElevated: darkModeEnabled ? "#111827" : "#ffffff",
+  colorBgContainer: darkModeEnabled ? DARK_BG : "#ffffff",
+  colorBgLayout: darkModeEnabled ? DARK_BG : "#f5f7fa",
+  colorBgElevated: darkModeEnabled ? DARK_BG : "#ffffff",
 
   colorBorder: darkModeEnabled ? "#374151" : "#d1d5db",
   colorBorderSecondary: darkModeEnabled ? "#1f2937" : "#e5e7eb",
+
   borderRadius: 8,
 
-  colorLink: PRIMARY,
-  colorLinkHover: PRIMARY,
+  colorLink: "#2563eb",
+  colorLinkHover: "#1d4ed8",
   colorLinkActive: PRIMARY_ACTIVE,
   linkDecoration: "none",
 });
@@ -41,17 +47,26 @@ const getAntdTheme = (mode: ThemeMode): ThemeConfig => {
 
   return {
     token: getCommonTokens(darkModeEnabled),
+
     components: {
+      Menu: {
+        itemSelectedColor: "#ffffff",
+        itemSelectedBg: SELECTED_COLOR,
+        itemHoverColor: SELECTED_COLOR,
+        itemHoverBg: darkModeEnabled ? "rgba(21, 104, 220, 0.15)" : "#e6f4ff",
+
+        darkItemSelectedBg: SELECTED_COLOR,
+        darkItemSelectedColor: "#ffffff",
+        darkItemHoverBg: "rgba(21, 104, 220, 0.3)",
+        darkItemHoverColor: "#ffffff",
+      },
+
       Button: {
-        controlHeight: 42,
-        fontWeight: 600,
-        borderRadius: 10,
         colorPrimary: PRIMARY,
         colorPrimaryHover: PRIMARY_HOVER,
         colorPrimaryActive: PRIMARY_ACTIVE,
         primaryColor: "#ffffff",
-        defaultColor: SECONDARY,
-        defaultBorderColor: SECONDARY,
+        defaultColor: darkModeEnabled ? "#f3f4f6" : "#000000",
         defaultHoverColor: SECONDARY_HOVER,
         defaultHoverBorderColor: SECONDARY_HOVER,
         defaultActiveBorderColor: SECONDARY_ACTIVE,
@@ -59,36 +74,44 @@ const getAntdTheme = (mode: ThemeMode): ThemeConfig => {
       },
 
       Input: {
-        controlHeight: 42,
-        borderRadius: 10,
         activeBorderColor: PRIMARY,
         hoverBorderColor: PRIMARY_HOVER,
-        activeShadow: `0 0 0 3px ${darkModeEnabled ? "rgba(9, 76, 146, 0.25)" : PRIMARY_BG}`,
+        activeShadow: `0 0 0 3px ${darkModeEnabled ? "rgba(0, 18, 89, 0.35)" : PRIMARY_BG}`,
+        colorBgContainer: darkModeEnabled ? DARK_BG : "#ffffff",
       },
 
       Checkbox: {
         colorPrimary: PRIMARY,
         colorPrimaryHover: PRIMARY_HOVER,
-        colorBgContainerDisabled: darkModeEnabled ? "#1f2937" : "#f3f4f6",
         borderRadiusSM: 4,
       },
 
       Select: {
         controlHeight: 42,
         borderRadius: 10,
-        optionSelectedBg: darkModeEnabled ? "#102a4d" : PRIMARY_BG,
-        optionSelectedColor: PRIMARY,
-        optionActiveBg: darkModeEnabled ? "#1f2937" : SECONDARY_BG,
+        colorBgContainer: darkModeEnabled ? DARK_BG : "#ffffff",
+        optionSelectedBg: darkModeEnabled ? "#2f2f2f" : PRIMARY_BG,
+        optionSelectedColor: darkModeEnabled ? "#f3f4f6" : PRIMARY,
+        optionActiveBg: darkModeEnabled ? "#333333" : SECONDARY_BG,
       },
 
       Card: {
         borderRadiusLG: 20,
+        colorBgContainer: darkModeEnabled ? DARK_BG : "#ffffff",
+      },
+
+      Modal: {
+        contentBg: darkModeEnabled ? DARK_BG : "#ffffff",
+        headerBg: darkModeEnabled ? DARK_BG : "#ffffff",
+        footerBg: darkModeEnabled ? DARK_BG : "#ffffff",
       },
 
       Table: {
         borderRadius: 0,
         borderRadiusLG: 0,
         headerSplitColor: "transparent",
+        colorBgContainer: darkModeEnabled ? DARK_BG : "#ffffff",
+        colorFillAlter: darkModeEnabled ? "#2a2a2a" : "#fafafa",
       },
 
       Spin: {
