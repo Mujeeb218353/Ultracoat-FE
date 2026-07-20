@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { authApi } from "../api/auth.api";
-import useAuthStore from "../store/auth.store";
 import { UpdateProfileRequest } from "../types/auth.types";
 import useAlert from "@/features/alert/hooks/use-alert";
 import getErrorMessage from "@/lib/api/error";
+import { useSetUser } from "../selectors/auth.selector";
 
 const useUpdateProfile = () => {
-  const setUser = useAuthStore((s) => s.setUser);
+  const setUser = useSetUser();
   const { success, error } = useAlert();
 
   return useMutation({
