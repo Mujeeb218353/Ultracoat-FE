@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Layout, Menu } from "antd";
 import UltraCoatImg from "../../public/ultra-coat-image.png";
 import { Image } from "antd";

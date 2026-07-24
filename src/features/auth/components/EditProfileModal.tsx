@@ -104,6 +104,7 @@ const EditProfileModal = ({ open, onClose }: EditProfileModalProps) => {
           <Button 
             disabled={isPending}
             onClick={onClose}
+            className="dark:disabled:border-gray-600! dark:disabled:text-gray-400!"
           >
             Cancel
            </Button>
