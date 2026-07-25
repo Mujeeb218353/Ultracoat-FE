@@ -150,6 +150,7 @@ const ResetPasswordForm = () => {
             schema={loginSchema.shape.password}
             icon={<Lock className="text-gray-400! mr-2" size={15} />}
             placeholder="Enter your new password"
+            className="text-gray-200! w-full bg-[#142131]/30! border border-white/10! shadow-none! [&_input::placeholder]:text-gray-500! [&_.ant-input-password-icon]:text-white/40! [&_.ant-input-password-icon:hover]:text-white/70! focus-within:border-[#018739]!"
           />
 
           <FormField
@@ -164,6 +165,7 @@ const ResetPasswordForm = () => {
             }}
             icon={<Lock className="text-gray-400! mr-2" size={15} />}
             placeholder="Re-enter your new password"
+            className="text-gray-200! w-full bg-[#142131]/30! border border-white/10! shadow-none! [&_input::placeholder]:text-gray-500! [&_.ant-input-password-icon]:text-white/40! [&_.ant-input-password-icon:hover]:text-white/70! focus-within:border-[#018739]!"
           />
 
           <Button
@@ -220,14 +222,13 @@ const ResetPasswordForm = () => {
             disabled={isOtpExpired}
             schema={resetPasswordSchema.shape.otp}
             onChange={() => setOtpFailed(false)}
+            className="text-gray-200! w-full bg-[#142131]/30! border border-white/10! shadow-none! [&_input::placeholder]:text-gray-500! [&_.ant-input-password-icon]:text-white/40! [&_.ant-input-password-icon:hover]:text-white/70! focus-within:border-[#018739]!"
           />
 
           <div className="w-full max-w-64 flex flex-col gap-1.5">
             <div className="h-1 w-full rounded-full bg-white/10 overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-1000 ease-linear ${
-                  isOtpExpired ? "bg-red-500" : isExpiringSoon ? "bg-amber-500" : "bg-[#018739]"
-                }`}
+                className={`h-full rounded-full transition-all duration-1000 ease-linear ${isOtpExpired ? "bg-red-500" : isExpiringSoon ? "bg-amber-500" : "bg-[#018739]"}`}
                 style={{ width: `${progressPercent}%` }}
               />
             </div>

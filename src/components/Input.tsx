@@ -15,9 +15,6 @@ export interface FormInputProps extends Omit<InputProps, "prefix" | "size" | "on
   onChange?: (value: string) => void;
 }
 
-const baseClassName =
-  "text-gray-200! w-full bg-[#142131]/30! border border-white/10! shadow-none! [&_input::placeholder]:text-gray-500! [&_.ant-input-password-icon]:text-white/40! [&_.ant-input-password-icon:hover]:text-white/70! focus-within:border-[#018739]!";
-
 const otpClassName =
   "w-full! max-w-64! justify-between! [&_.ant-otp-input]:size-14! [&_.ant-otp-input]:bg-[#142131]/40! [&_.ant-otp-input]:border-white/15! [&_.ant-otp-input]:text-white! [&_.ant-otp-input]:text-lg! [&_.ant-otp-input]:text-center! [&_.ant-otp-input]:font-bold! [&_.ant-otp-input]:rounded-xl! [&_.ant-otp-input]:transition-all! [&_.ant-otp-input:focus]:border-[#018739]! [&_.ant-otp-input:focus]:shadow-[0_0_0_3px_rgba(1,135,57,0.2)]!";
 
@@ -53,7 +50,7 @@ const FormInput = ({
   const commonProps = {
     size: size as InputProps["size"],
     prefix: icon,
-    className: `${baseClassName} ${className ?? ""}`,
+    className: `${className ?? ""}`,
     value,
     onChange: handleChange,
     ...inputProps,

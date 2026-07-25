@@ -1,7 +1,7 @@
 "use client";
 
 import { Form, Button, Flex, Checkbox } from "antd";
-import { User, Lock, Eye, EyeOff } from "lucide-react";
+import { User, Lock } from "lucide-react";
 import Link from "next/link";
 import FormField from "@/components/FormField";
 import { loginSchema } from "@/features/auth/schemas/auth.schema";
@@ -37,6 +37,7 @@ const LoginForm = () => {
           schema={loginSchema.shape.email}
           icon={<User className="text-gray-400! mr-2" size={15} />}
           placeholder="Enter your email"
+          className="text-gray-200! w-full bg-[#142131]/30! border border-white/10! shadow-none! [&_input::placeholder]:text-gray-500! [&_.ant-input-password-icon]:text-white/40! [&_.ant-input-password-icon:hover]:text-white/70! focus-within:border-[#018739]!"
         />
 
         <FormField
@@ -46,6 +47,7 @@ const LoginForm = () => {
           schema={loginSchema.shape.password}
           icon={<Lock className="text-gray-200! mr-2" size={15} />}
           placeholder="Enter your password"
+          className="text-gray-200! w-full bg-[#142131]/30! border border-white/10! shadow-none! [&_input::placeholder]:text-gray-500! [&_.ant-input-password-icon]:text-white/40! [&_.ant-input-password-icon:hover]:text-white/70! focus-within:border-[#018739]!"
         />
 
         <Flex justify="space-between" align="center" className="text-sm pt-1">

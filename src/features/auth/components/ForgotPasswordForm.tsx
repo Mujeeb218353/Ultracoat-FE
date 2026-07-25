@@ -43,6 +43,7 @@ const ForgotPasswordForm = () => {
           schema={forgotPasswordSchema.shape.email}
           icon={<User className="text-gray-400! mr-2" size={15} />}
           placeholder="Enter your email"
+          className="text-gray-200! w-full bg-[#142131]/30! border border-white/10! shadow-none! [&_input::placeholder]:text-gray-500! [&_.ant-input-password-icon]:text-white/40! [&_.ant-input-password-icon:hover]:text-white/70! focus-within:border-[#018739]!"
         />
 
         <Flex justify="space-between" align="center" className="text-sm pt-1">
