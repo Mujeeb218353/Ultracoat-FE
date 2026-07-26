@@ -1,8 +1,8 @@
-import useAlertStore from "@/features/alert/store/alert.store";
+import { useAlertApi } from "../selectors/alert.selector";
 import alertStyles, { alertIcons } from "@/features/alert/styles/alert.styles";
 
-const useNotify = () => {
-  const api = useAlertStore((s) => s.api);
+const useAlert = () => {
+  const api = useAlertApi();
 
   return {
     success: (content: string) =>
@@ -36,4 +36,4 @@ const useNotify = () => {
   };
 };
 
-export default useNotify;
+export default useAlert;

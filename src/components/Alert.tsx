@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useSetAlertApi } from "@/features/alert/selectors/alert.selector";
 import { message } from "antd";
-import useAlertStore from "@/features/alert/store/alert.store";
+import { useEffect } from "react";
 
 const Alert = () => {
   const [api, contextHolder] = message.useMessage();
-  const setApi = useAlertStore((s) => s.setApi);
+  const setApi = useSetAlertApi();
 
   useEffect(() => {
     setApi(api);

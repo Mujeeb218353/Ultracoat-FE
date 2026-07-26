@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import type { MessageInstance } from "antd/es/message/interface";
 
-interface MessageState {
+interface AlertState {
   api: MessageInstance | null;
   setApi: (api: MessageInstance) => void;
 }
 
-const useMessageStore = create<MessageState>((set) => ({
+const useAlertStore = create<AlertState>((set) => ({
   api: null,
   setApi: (api) => set({ api }),
 }));
 
-export default useMessageStore;
+export default useAlertStore;
