@@ -2,6 +2,7 @@
 
 import { Layout, Menu } from "antd";
 import UltraCoatImg from "../../public/ultra-coat-image.png";
+import UCPLogo from "../../public/ucp-logo.png";
 import { Image } from "antd";
 import { usePathname } from "next/navigation";
 import ROLE_CONFIG from "@/config/RoleConfig";
@@ -50,9 +51,9 @@ const Sidebar = ({ sidebarRef, collapsed, isMobile, setIsLogoutModalOpen }: Side
       }}
     >
       <div className="flex h-full flex-col">
-        <div className="w-full p-6 flex justify-center items-center">
+        <div className={`w-full flex justify-center items-center ${collapsed ? "p-3 w-16! h-16!" : "p-6"}`}>
           <Image
-            src={UltraCoatImg.src}
+            src={collapsed ? UCPLogo.src : UltraCoatImg.src}
             alt="Ultracoat Pakistan Logo"
             width={"100%"}
             preview={false}

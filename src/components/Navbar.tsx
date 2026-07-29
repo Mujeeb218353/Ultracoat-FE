@@ -28,7 +28,7 @@ const Navbar = ({ collapsed, setCollapsed, toggleBtnRef, isMobile, user }: Navba
 
   return (
     <Header
-      className="h-18! px-4! flex! justify-between! items-center! fixed! top-0! z-100! overflow-hidden! shadow-sm!"
+      className="h-18! px-4! flex! justify-between! items-center! fixed! top-0! z-100! overflow-hidden! shadow-sm! border-b border-0.5 border-gray-200 dark:border-white/10"
       style={{
         width: isMobile ? "100%" : collapsed ? "calc(100% - 4rem)" : "calc(100% - 15rem)",
         right: 0,

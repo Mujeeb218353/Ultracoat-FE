@@ -43,8 +43,6 @@ const EditProfileModal = ({ open, onClose }: EditProfileModalProps) => {
       footer={null}
       destroyOnHidden
       className="dark:text-white!"
-      centered
-
     >
       <Form
         form={form}

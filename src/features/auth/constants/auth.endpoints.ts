@@ -1,16 +1,16 @@
-
+const baseUrl = "/auth";
 
 const authEndpoints = {
-  login: "/auth/login",
-  logout: "/auth/logout",
-  refreshToken: "/auth/refresh-token",
-  updateProfile: "/auth/update-profile",
-  updatePassword: "/auth/password",
-  sendVerificationEmail: "/auth/send-email-verification-mail",
-  verifyEmail: "/auth/verify-email",
+  login: `${baseUrl}/login`,
+  logout: `${baseUrl}/logout`,
+  refreshToken: `${baseUrl}/refresh-token`,
+  updateProfile: `${baseUrl}/update-profile`,
+  updatePassword: `${baseUrl}/password`,
+  sendVerificationEmail: `${baseUrl}/send-email-verification-mail`,
+  verifyEmail: `${baseUrl}/verify-email`,
 
-  forgotPassword: "/auth/forgot-password",
-  resetPassword: "/auth/reset-password",
+  forgotPassword: `${baseUrl}/forgot-password`,
+  resetPassword: `${baseUrl}/reset-password`,
 } as const;
 
 export default authEndpoints;
