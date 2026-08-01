@@ -1,37 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Button, Typography } from "antd";
-import { User, Mail, Phone, MapPin, Shield, Pencil } from "lucide-react";
 import { useUser } from "@/features/auth/selectors/auth.selector";
-import EditProfileModal from "@/features/auth/components/EditProfileModal";
+import { Typography } from "antd";
+import { Mail, MapPin, Phone, Shield, User } from "lucide-react";
 
 const ProfileCard = () => {
   const user = useUser();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!user) return null;
 
   return (
     <div className="w-full py-6 px-4">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <Typography.Title level={4} className="m-0! dark:text-white!">
-            Profile
-          </Typography.Title>
-          <Typography.Text className="text-sm! dark:text-white!">
-            Manage your account information
-          </Typography.Text>
-        </div>
-        <Button
-          icon={<Pencil size={15} />}
-          onClick={() => setIsModalOpen(true)}
-          className="bg-[#0A1F44]! text-white! border-none! hover:bg-[#0A1F44]/90!"
-        >
-          Edit
-        </Button>
-      </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 border border-gray-100 dark:border-white/10 rounded-2xl p-6">
         <ProfileField icon={<User size={16} />} label="Full Name" value={user.name} />
         <ProfileField icon={<Mail size={16} />} label="Email Address" value={user.email} />
@@ -39,8 +18,6 @@ const ProfileCard = () => {
         <ProfileField icon={<MapPin size={16} />} label="Location" value={user.location} />
         <ProfileField icon={<Shield size={16} />} label="Role" value={user.role} />
       </div>
-
-      <EditProfileModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

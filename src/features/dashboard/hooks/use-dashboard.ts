@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import dashboardApi from "../api/dashboard.api";
-import { queryKeys } from "../query/query-keys";
+import { queryKeys } from "../query/dashboard.query-keys";
 import { useSetDashboard } from "../selectors/dashboard.selector";
 
 const useDashboard = () => {
