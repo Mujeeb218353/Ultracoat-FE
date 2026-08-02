@@ -11,11 +11,11 @@ interface ProfileLayoutProps {
 const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex flex-col">
       <PageHeader 
         onClick={() => setIsModalOpen(true)}
       />
-      <div className="flex-1 p-5">
+      <div className="p-5">
         {children}
       </div>
       <EditProfileModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
