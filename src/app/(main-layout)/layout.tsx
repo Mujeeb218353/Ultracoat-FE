@@ -63,10 +63,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className="flex flex-col h-screen w-full">
       <Layout hasSider className="w-full! h-full! overflow-x-hidden">
-        <Sidebar 
-          sidebarRef={sidebarRef} 
-          collapsed={collapsed} 
-          isMobile={isMobile} 
+        <Sidebar
+          sidebarRef={sidebarRef}
+          collapsed={collapsed}
+          isMobile={isMobile}
           setIsLogoutModalOpen={setIsLogoutModalOpen}
         />
         <Layout className="w-full! min-h-max flex flex-col overflow-x-scroll">
@@ -81,8 +81,12 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             }}
           />
           <Content className="flex-1 flex flex-col overflow-y-scroll">
-            <div className="flex-1 flex justify-center pt-18 ">
-              {user && !user.isVerified ? <EmailVerification /> : children}
+            <div className="flex-1 flex flex-col pt-18">
+              {user && !user.isVerified ? (
+                <EmailVerification />
+              ) : (
+                <div>{children}</div>
+              )}
             </div>
           </Content>
         </Layout>
@@ -92,7 +96,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         />
       </Layout>
     </div>
-  )
+  );
 };
 
 export default MainLayout;
