@@ -1,3 +1,5 @@
-export const queryKeys = {
-  dashboard: () => ["dashboard"] as const,
-};
+const queryKeys = {
+  dashboard: () => ["dashboard"],
+} as const;
+
+export default queryKeys;

@@ -7,11 +7,13 @@ import { useRecentActivity } from "../selectors/dashboard.selector";
 
 dayjs.extend(relativeTime);
 
-const STATUS_COLORS: Record<string, string> = {
+export const STATUS_COLORS: Record<string, string> = {
+  "Quotation Created": "bg-purple-500",
   "Quotation Pending": "bg-amber-500",
-  "Quotation Approved": "bg-[#007A33]",
+  "Quotation Sent to Customer": "bg-blue-500",
+  "Quotation Approved": "bg-green-500",
   "Quotation Rejected": "bg-red-500",
-  "Quotation Re-quoted": "bg-blue-500",
+  "Quotation Re Quoted": "bg-orange-500",
 };
 
 const getStatusColor = (statusLabel: string) => STATUS_COLORS[statusLabel] ?? "bg-gray-400";
@@ -29,11 +31,7 @@ const RecentActivityCard = () => {
         {activities.map((activity, index) => (
           <div
             key={activity.id}
-            className={`flex items-start justify-between gap-4 py-3 ${
-              index !== activities.length - 1
-                ? "border-b border-gray-100 dark:border-white/10"
-                : ""
-            }`}
+            className={`flex items-start justify-between gap-4 py-3 ${index !== activities.length - 1 ? "border-b border-gray-100 dark:border-white/10" : ""}`}
           >
             <div className="flex items-start gap-3">
               <span
