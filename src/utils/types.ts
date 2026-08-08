@@ -26,34 +26,5 @@ export type Filters<S = Status> = {
   limit?: number;
   search?: string;
   status?: S;
+  isActive?: boolean | null;
 };
-
-type RequestWithFilters<S> = {
-  filters: Filters<S>;
-  payload?: never;
-  id?: never;
-};
-
-type RequestWithPayload<T> = {
-  filters?: never;
-  payload: T;
-  id?: never;
-};
-
-type RequestWithIdOnly = {
-  filters?: never;
-  payload?: never;
-  id: string;
-};
-
-type RequestWithIdAndPayload<T> = {
-  filters?: never;
-  payload: Partial<T>;
-  id: string;
-};
-
-export type ApiRequest<T, S = Status> =
-  | RequestWithFilters<S>
-  | RequestWithPayload<T>
-  | RequestWithIdOnly
-  | RequestWithIdAndPayload<T>;

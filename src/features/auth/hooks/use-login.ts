@@ -1,10 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { authApi } from "../api/auth.api";
+import authApi from "../api/auth.api";
 import { useSetUser, useSetTokens } from "../selectors/auth.selector";
 import { LoginRequest } from "../types/auth.types";
 import useAlert from "@/features/alert/hooks/use-alert";
-import getErrorMessage from "@/lib/api/error";
 
 const useLogin = () => {
   const router = useRouter();
@@ -26,7 +25,7 @@ const useLogin = () => {
       router.refresh();
     },
     onError: (err) => {
-      error(getErrorMessage(err, "Failed to login. Please check your credentials and try again."));
+      error(err, "Failed to login. Please check your credentials and try again.");
     },
   });
 };

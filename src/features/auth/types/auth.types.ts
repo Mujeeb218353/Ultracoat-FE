@@ -26,17 +26,17 @@ export interface AuthTokens {
   refreshToken: string;
 }
 
+export type LoginRequest = z.infer<typeof loginSchema>;
+
 export interface LoginResponse {
   accessToken: string | null;
   refreshToken: string | null;
   user: User;
 }
 
-export type LoginRequest = z.infer<typeof loginSchema>;
-
 export type UpdateProfileRequest = z.infer<typeof updateProfileSchema>;
 
-export type UpdateProfileResponse = Pick<LoginResponse, "user">;
+export type UpdateProfileResponse = User;
 
 export type UpdatePasswordRequest = Omit<z.infer<typeof updatePasswordSchema>, "confirmPassword">;
 

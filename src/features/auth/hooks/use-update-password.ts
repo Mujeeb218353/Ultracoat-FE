@@ -1,8 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { authApi } from "../api/auth.api";
+import authApi from "../api/auth.api";
 import { UpdatePasswordRequest } from "../types/auth.types";
 import useAlert from "@/features/alert/hooks/use-alert";
-import getErrorMessage from "@/lib/api/error";
 
 const useUpdatePassword = () => {
   const { success, error } = useAlert();
@@ -12,7 +11,7 @@ const useUpdatePassword = () => {
       success("Password updated successfully!");
     },
     onError: (err) => {
-      error(getErrorMessage(err, "Failed to update password. Please try again later."));
+      error(err, "Failed to update password. Please try again later.");
     }
   });
 }

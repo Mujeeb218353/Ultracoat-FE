@@ -1,8 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { authApi } from "../api/auth.api";
+import authApi from "../api/auth.api";
 import { ForgotPasswordRequest } from "../types/auth.types";
 import useAlert from "@/features/alert/hooks/use-alert";
-import getErrorMessage from "@/lib/api/error";
 import { useRouter } from "next/navigation";
 
 const useForgotPassword = () => {
@@ -18,7 +17,7 @@ const useForgotPassword = () => {
       router.push(`/auth/reset-password?email=${encodeURIComponent(data.email)}`);
     },
     onError: (err) => {
-      error(getErrorMessage(err, "Failed to send password reset email. Please try again later."));
+      error(err, "Failed to send password reset email. Please try again later.");
     },
   });
 };

@@ -1,5 +1,6 @@
 import { useAlertApi } from "../selectors/alert.selector";
 import alertStyles, { alertIcons } from "@/features/alert/styles/alert.styles";
+import getErrorMessage from "@/lib/api/error";
 
 const useAlert = () => {
   const api = useAlertApi();
@@ -12,10 +13,10 @@ const useAlert = () => {
         icon: alertIcons.success,
         styles: alertStyles.success,
       }),
-    error: (content: string) =>
+    error: (content: Error | string, defaultMessage: string = "Something went wrong") =>
       api?.open({
         type: "error",
-        content,
+        content: getErrorMessage(content, defaultMessage),
         icon: alertIcons.error,
         styles: alertStyles.error,
       }),
