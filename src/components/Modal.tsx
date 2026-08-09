@@ -25,21 +25,19 @@ const ModalComponent = ({ open, onCancel, children, title, description, icon, fo
       centered={centered}
       destroyOnHidden
       width={width}
-      className={`[&_.ant-modal-content]:p-0! [&_.ant-modal-content]:overflow-hidden! ${className}`}
+      className={`p-0! ${className}`}
     >
-      <div className="bg-[#001529] p-5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-            {icon}
-          </div>
-          <div>
-            <h2 className="text-sm font-semibold m-0 leading-tight">
-              {title}
-            </h2>
-            <p className="text-xs text-gray-300 m-0 mt-0.5">
-              {description}
-            </p>
-          </div>
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/10 flex items-center justify-center">
+          {icon}
+        </div>
+        <div>
+          <h2 className="text-sm font-semibold m-0 leading-tight">
+            {title}
+          </h2>
+          <p className="text-xs text-gray-500 m-0 mt-0.5">
+            {description}
+          </p>
         </div>
       </div>
       {children}

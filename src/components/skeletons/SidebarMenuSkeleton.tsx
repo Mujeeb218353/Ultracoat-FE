@@ -5,7 +5,7 @@ const SidebarMenuSkeleton = () => {
       {menuPlaceholders.map((_, i) => (
         <div
           key={i}
-          className={`h-12 flex items-center justify-around px-3 ${i === 0 ? "rounded-lg bg-slate-800" : ""}`}
+          className={`h-12 flex items-center justify-around px-3`}
         >
           <div className="w-6.5 h-6.5 rounded-sm  bg-slate-700 animate-pulse shrink-0" />
           <div className="w-37 h-6.25 rounded-sm  bg-slate-700 animate-pulse" />

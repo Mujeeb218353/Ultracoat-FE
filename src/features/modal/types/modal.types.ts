@@ -1,0 +1,15 @@
+export type ModalType = 
+  | "CREATE_REPRESENTATIVE" 
+  | "VIEW_REPRESENTATIVE" 
+  | "UPDATE_REPRESENTATIVE"
+  | "UPDATE_REPRESENTATIVE_STATUS"
+  | "UPDATE_REPRESENTATIVE_EMAIL"
+  | "DELETE_REPRESENTATIVE" 
+  | null;
+
+export interface ModalStore {
+  activeModal: ModalType;
+  modalData?: unknown;
+  openModal: <T>(type: ModalType, data?: T) => void;
+  closeModal: () => void;
+}

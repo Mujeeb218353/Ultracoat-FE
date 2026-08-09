@@ -8,6 +8,7 @@ import FormInput, { FormInputProps } from "./Input";
 interface FormFieldProps extends FormInputProps {
   name: string;
   label?: string;
+  hidden?: boolean;
   schema?: ZodType<unknown>;
   required?: boolean;
   dependencies?: string[];
@@ -22,6 +23,7 @@ const FormField = ({
   dependencies,
   customValidator,
   type,
+  hidden = false,
   ...inputProps
 }: FormFieldProps) => {
   const form = Form.useFormInstance();
@@ -53,18 +55,20 @@ const FormField = ({
   return (
     <Form.Item
       name={name}
-      label={
-        label ? (
+      label={label ? (
           <Typography.Text
-            className={`text-sm! text-white/80! font-medium! ${type === "otp" ? "w-full! text-center!" : ""}`}
+            className={`text-sm! font-medium! ${type === "otp" ? "w-full! text-center!" : ""}`}
           >
             {label}
           </Typography.Text>
-        ) : undefined
+        ) 
+        : 
+        undefined
       }
-      className={`m-0! flex flex-col gap-2 ${type === "otp" ? "items-center! w-full! [&_.ant-form-item-label]:w-full! [&_.ant-form-item-label]:text-center!" : ""}`}
+      className={`m-0! gap-2! ${type === "otp" ? "items-center! w-full! [&_.ant-form-item-label]:w-full! [&_.ant-form-item-label]:text-center!" : ""}`}
       dependencies={dependencies}
       rules={rules}
+      hidden={hidden}
     >
       <FormInput type={type} {...inputProps} />
     </Form.Item>

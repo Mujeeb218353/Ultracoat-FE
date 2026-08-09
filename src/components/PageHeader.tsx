@@ -4,6 +4,7 @@ import { Button } from "antd";
 import { Plus, Pencil } from "lucide-react";
 import { useHasHydrated } from "@/features/auth/selectors/auth.selector";
 import { usePathname } from "next/navigation";
+import PageHeaderSkeleton from "./skeletons/PageHeaderSkeleton";
 
 interface PageHeaderData {
   title: string;
@@ -90,14 +91,14 @@ const PageHeader = ({ onClick, className }: PageHeaderProps) => {
   };
   
   if (!hasHydrated) {
-    return null;
+    return <PageHeaderSkeleton isBtnVisible={!!actionButton.label} />;
   }
 
   return (
     <div 
-      className={`flex-1 flex items-center justify-between border-b border-0.5 border-gray-200 dark:border-white/10 p-5 bg-white dark:bg-transparent ${className}`}
+      className={`flex-1 flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-0.5 border-gray-200 dark:border-white/10 p-5 bg-white dark:bg-transparent ${className}`}
     >
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 text-center sm:text-left">
         <h1 
           className="text-2xl font-semibold"
         >
