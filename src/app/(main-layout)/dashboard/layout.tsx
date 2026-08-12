@@ -9,8 +9,7 @@ interface DashboardLayoutProps {
 };
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-  const { data, isLoading } = useDashboard();
-  console.log("DashboardLayout data", data);
+  const { isLoading } = useDashboard();
 
   if (isLoading) {
     return <Loading />;

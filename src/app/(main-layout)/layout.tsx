@@ -80,7 +80,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               role: user?.role || "Guest",
             }}
           />
-          <Content className="flex-1 flex flex-col overflow-y-scroll">
+          <Content className="flex-1 flex flex-col overflow-y-scroll overflow-x-hidden">
             <div className="flex-1 flex flex-col pt-18">
               {user && !user.isVerified ? (
                 <EmailVerification />
