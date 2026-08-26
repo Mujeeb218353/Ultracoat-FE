@@ -8,6 +8,7 @@ import { Mail, MapPin, Phone, User } from "lucide-react";
 import useUpdateRepresentative from "../hooks/use-update-representative";
 import { updateRepresentativeSchema } from "../schemas/representatives.schema";
 import { Representative } from "../types/representatives.types";
+import { useEffect } from "react";
 
 const UpdateRepresentativeModal = () => {
   const modalData = useModalData<Representative>();
