@@ -19,12 +19,12 @@ const UpdateSalesRepresentativeForm = ({ salesRepresentative }: UpdateSalesRepre
 
   const handleFinish = (values: Representative) => {
   
-      updateRepresentative(values, {
-        onSuccess: () => {
-          closeModal();
-        },
-      });
-    };
+    updateRepresentative(values, {
+      onSuccess: () => {
+        closeModal();
+      },
+    });
+  };
   return (
     <Form
       form={form}

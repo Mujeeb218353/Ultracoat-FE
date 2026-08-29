@@ -16,7 +16,7 @@ const UpdateRepresentativeModal = () => {
 
   return (
     <Modal
-      open={activeModal === "UPDATE_REPRESENTATIVE"}
+      open={isOpen}
       onCancel={closeModal}
       title="Update Sales Representative"
       description="Fill in the details below."
