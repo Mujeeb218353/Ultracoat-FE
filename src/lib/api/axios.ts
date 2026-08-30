@@ -3,7 +3,6 @@ import axios, {
   AxiosInstance,
   InternalAxiosRequestConfig,
 } from "axios";
-import Cookies from "js-cookie";
 import useAuthStore from "@/features/auth/store/auth.store";
 import authEndpoints from "@/features/auth/constants/auth.endpoints";
 import { AuthTokens } from "@/features/auth/types/auth.types";
@@ -27,21 +26,11 @@ interface QueueItem {
 const api: AxiosInstance = axios.create({
   baseURL,
   timeout: 60 * 1000,
+  withCredentials: true,
   headers: { 
     "Content-Type": "application/json" 
   },
 });
-
-api.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const accessToken = Cookies.get("accessToken");
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-    return config;
-  },
-  (error: AxiosError) => Promise.reject(error),
-);
 
 let isRefreshing = false;
 let failedQueue: QueueItem[] = [];
@@ -65,12 +54,9 @@ api.interceptors.response.use(
       originalRequest.url?.includes(url),
     );
 
-    const refreshToken = Cookies.get("refreshToken");
-
     if (
       error.response?.status === 401 &&
       !isAuthEndpoint &&
-      refreshToken &&
       !originalRequest._retry
     ) {
       if (isRefreshing) {
@@ -90,15 +76,12 @@ api.interceptors.response.use(
           `${baseURL}${authEndpoints.refreshToken}`,
           null,
           {
-            headers: {
-              Authorization: `Bearer ${refreshToken}`,
-              "x-refresh-token": `Bearer ${refreshToken}`,
-            },
+            withCredentials: true,
           },
         );
 
         const { accessToken, refreshToken: newRefreshToken } = res.data.data;
-        useAuthStore.getState().setTokens(accessToken, newRefreshToken);
+        useAuthStore.getState().setIsAuthenticated(accessToken, newRefreshToken);
 
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
         processQueue(null, accessToken);

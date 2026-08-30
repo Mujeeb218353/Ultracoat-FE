@@ -52,7 +52,7 @@ export interface AuthState {
   hasHydrated: boolean;
   patchUser: (partial: Partial<User>) => void;
   setUser: (user: User) => void;
-  setTokens: (accessToken: string | null, refreshToken: string | null) => void;
+  setIsAuthenticated: (accessToken: string | null, refreshToken: string | null) => void;
   clearAuth: () => void;
   setHasHydrated: (state: boolean) => void;
 }
