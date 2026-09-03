@@ -32,8 +32,8 @@ export const updateProfileSchema = z.object({
 export const updatePasswordSchema = z.object({
   currentPassword: z.string().min(8, "Password must be at least 8 characters"),
   newPassword: z.string().min(8, "Password must be at least 8 characters"),
-  confirmPassword: z.string().min(8, "Password must be at least 8 characters")
-}).refine((data) => data.newPassword === data.confirmPassword, {
+  confirmNewPassword: z.string().min(8, "Password must be at least 8 characters")
+}).refine((data) => data.newPassword === data.confirmNewPassword, {
   message: "Passwords do not match",
-  path: ["confirmPassword"],
+  path: ["confirmNewPassword"],
 });

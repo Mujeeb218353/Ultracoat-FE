@@ -1,4 +1,6 @@
 export type ModalType = 
+  | "UPDATE_PROFILE" 
+  | "UPDATE_PASSWORD"
   | "CREATE_REPRESENTATIVE" 
   | "VIEW_REPRESENTATIVE" 
   | "UPDATE_REPRESENTATIVE"
@@ -12,4 +14,4 @@ export interface ModalStore {
   modalData?: unknown;
   openModal: <T>(type: ModalType, data?: T) => void;
   closeModal: () => void;
-}
+};

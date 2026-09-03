@@ -20,6 +20,8 @@ export const buildPathKeyMap = (): Record<string, string> => {
       };
       items.forEach(flatten);
     });
+
+    map[cleanPath(basePath, "profile")] = "profile";
   });
 
   return map;
