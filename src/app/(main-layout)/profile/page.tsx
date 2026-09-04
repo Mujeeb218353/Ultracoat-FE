@@ -30,7 +30,7 @@ type ProfileFieldProps = {
 
 const ProfileField = ({ icon, label, value }: ProfileFieldProps) => (
   <div>
-    <Typography.Text className="text-xs font-semibold dark:text-white! mb-1.5 block">
+    <Typography.Text className="text-xs font-semibold dark:text-white! mb-2! block">
       {label}
     </Typography.Text>
     <div className="flex items-center gap-2 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2.5 bg-gray-50 dark:bg-white/5">

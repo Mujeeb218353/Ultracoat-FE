@@ -2,10 +2,11 @@ import useAlert from "@/features/alert/hooks/use-alert";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import representativesApi from "../api/representatives.api";
 import { Representative, RepresentativesResponse } from "../types/representatives.types";
+import useInvalidateQueries from "@/hooks/use-invalidate-queries";
 
 const useCreateRepresentative = () => {
-
   const queryClient = useQueryClient();
+  const invalidateQueries = useInvalidateQueries();
   const { success, error } = useAlert();
 
   return useMutation({
@@ -28,10 +29,10 @@ const useCreateRepresentative = () => {
         };
       });  
 
-      queryClient.invalidateQueries({
-        queryKey: ["representatives"],
-        refetchType: "none",
-      });
+      invalidateQueries([
+        ["dashboard"],
+        ["representatives"],
+      ]);
 
       success("Representative created successfully!");
     },

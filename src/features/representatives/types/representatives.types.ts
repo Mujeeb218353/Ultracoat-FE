@@ -1,3 +1,4 @@
+import { User } from "@/features/auth/types/auth.types";
 
 export interface Representative {
   id?: string;
@@ -10,6 +11,8 @@ export interface Representative {
   isVerified?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  creator?: User;
+  updater?: User;
 };
 
 export interface Statistics {
