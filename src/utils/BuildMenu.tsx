@@ -21,48 +21,50 @@ const BuildMenuItems = (
   collapsed: boolean,
 ): ItemType[] => {
 
-  if (!roleConfig) return [];
-
-  const { basePath, groups } = roleConfig;
   const items: ItemType[] = [];
+  const basePath = roleConfig?.basePath ?? "/";
+  
+  if (roleConfig) {
+    const { groups } = roleConfig;
+    
+    groups.forEach((group: typeof roleConfig.groups[0]) => {
 
-  groups.forEach((group: typeof roleConfig.groups[0]) => {
+      if (group.groupLabel) {
 
-    if (group.groupLabel) {
-
-      items.push({
-        type: "group",
-        label: <span className={`text-xs font-semibold ${collapsed ? 'hidden' : 'block'}`}>{group.groupLabel}</span>,
-        children: [
-          ...group.items.map((item: MenuItem) => item.children ? {
-            key: item.key,
-            icon: item.icon,
-            label: item.label,
-            children: item.children.map((child: MenuItem) => buildLeaf(child, basePath)),
-          }
-          : 
-          buildLeaf(item, basePath)
-          ),
-        ],
-      });
-    } else {
-      
-      group.items.forEach((item: MenuItem) => {
-        if (item.children) {
-          items.push({
-            key: item.key,
-            icon: <span className="">{item.icon}</span>,
-            label: <span className="text-xs font-semibold">{item.label}</span>,
-            children: item.children.map((child: MenuItem) =>
-              buildLeaf(child, basePath)
+        items.push({
+          type: "group",
+          label: <span className={`text-xs font-semibold ${collapsed ? 'hidden' : 'block'}`}>{group.groupLabel}</span>,
+          children: [
+            ...group.items.map((item: MenuItem) => item.children ? {
+              key: item.key,
+              icon: item.icon,
+              label: item.label,
+              children: item.children.map((child: MenuItem) => buildLeaf(child, basePath)),
+            }
+            : 
+            buildLeaf(item, basePath)
             ),
-          });
-        } else {
-          items.push(buildLeaf(item, basePath));
-        }
-      });
-    }
-  });
+          ],
+        });
+      } else {
+        
+        group.items.forEach((item: MenuItem) => {
+          if (item.children) {
+            items.push({
+              key: item.key,
+              icon: <span className="">{item.icon}</span>,
+              label: <span className="text-xs font-semibold">{item.label}</span>,
+              children: item.children.map((child: MenuItem) =>
+                buildLeaf(child, basePath)
+              ),
+            });
+          } else {
+            items.push(buildLeaf(item, basePath));
+          }
+        });
+      }
+    });
+  }
 
   const profileItem: ItemType = buildLeaf(
     {

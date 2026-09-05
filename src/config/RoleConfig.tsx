@@ -102,7 +102,7 @@ const adminGroups = [
 ];
 
 const ROLE_CONFIG: Record<string, RoleConfig> = {
-  admin: {
+  "ADMIN": {
     label: "Admin",
     basePath: "/",
     groups: adminGroups,

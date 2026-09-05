@@ -2,11 +2,12 @@
 
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-import { useUser } from "@/features/auth/selectors/auth.selector";
+import { useUser, useIsAuthenticated, useHasHydrated } from "@/features/auth/selectors/auth.selector";
 import { Layout } from "antd";
 import { useEffect, useRef, useState } from "react";
 import EmailVerification from "@/features/auth/components/EmailVerification";
 import LogoutModal from "@/features/auth/components/LogoutModal";
+import { useRouter, usePathname } from "next/navigation";
 
 const { Content } = Layout;
 
@@ -16,6 +17,11 @@ type MainLayoutProps = {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const user = useUser();
+  const isAuthenticated = useIsAuthenticated();
+  const hasHydrated = useHasHydrated();
+
+  const pathname = usePathname();
+  const router = useRouter();
 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const toggleBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -24,9 +30,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  
   useEffect(() => {
+    if (!hasHydrated) return;
 
+    if (!isAuthenticated && !pathname.includes("/auth")) {
+      router.push("/auth/login");
+    }
+  }, [hasHydrated, isAuthenticated, router, pathname]);
+
+  useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
@@ -59,6 +71,14 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [isMobile, collapsed]);
+
+  if (!hasHydrated) {
+    return null;
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col h-screen w-full">

@@ -1,14 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import authApi from "../api/auth.api";
-import { useSetUser, useSetTokens } from "../selectors/auth.selector";
+import { useSetUser, useSetIsAuthenticated } from "../selectors/auth.selector";
 import { LoginRequest } from "../types/auth.types";
 import useAlert from "@/features/alert/hooks/use-alert";
+import { resetAbortController } from "@/utils/abort-controller";
 
 const useLogin = () => {
   const router = useRouter();
   const setUser = useSetUser();
-  const setTokens = useSetTokens();
+  const setIsAuthenticated = useSetIsAuthenticated();
   const { success, error } = useAlert();
 
   return useMutation({
@@ -18,8 +19,9 @@ const useLogin = () => {
         error("Access denied. You do not have permission to access this application.");
         return;
       }
+      resetAbortController();
       success("Login successful!");
-      setTokens(data.accessToken, data.refreshToken);
+      setIsAuthenticated(data.accessToken, data.refreshToken);
       setUser(data.user);
       router.push("/dashboard");
       router.refresh();

@@ -25,9 +25,9 @@ const Sidebar = ({ sidebarRef, collapsed, isMobile, setIsLogoutModalOpen }: Side
   const location = usePathname();
   const hasHydrated = useHasHydrated();
 
-  const roleKey = user?.role?.toLowerCase();
+  const roleKey = user?.role;
   const roleConfig = roleKey ? ROLE_CONFIG[roleKey] : null;
-  const menuItems = BuildMenuItems(roleConfig, collapsed);
+  const menuItems = BuildMenuItems(roleConfig, collapsed) || [];
 
   return (
     <Sider
@@ -65,7 +65,7 @@ const Sidebar = ({ sidebarRef, collapsed, isMobile, setIsLogoutModalOpen }: Side
             <Menu
               mode="inline"
               theme="dark"
-              items={roleKey && roleConfig ? menuItems : []}
+              items={menuItems}
               selectedKeys={getSelectedMenuKeys(location)}
               className="w-full! border-none!"
               onClick={(info) => {

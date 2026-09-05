@@ -16,7 +16,7 @@ const useAuthStore = create<AuthState>()(
       },
 
       setUser: (user) => set({ user, isAuthenticated: Boolean(user) }),
-      setIsAuthenticated: (accessToken, refreshToken) =>  set({ isAuthenticated: Boolean(accessToken || refreshToken) }),
+      setIsAuthenticated: (accessToken, refreshToken) =>  set({ isAuthenticated: Boolean(accessToken) || Boolean(refreshToken) }),
       clearAuth: () => set({ user: null, isAuthenticated: false }),
       setHasHydrated: (state) => set({ hasHydrated: state }),
     }),
