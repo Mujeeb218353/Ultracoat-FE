@@ -10,10 +10,11 @@ interface ColumnActions {
   onEdit: (rep: Representative) => void;
   onEditEmail: (rep: Representative) => void;
   onDelete: (rep: Representative) => void;
-  onToggleStatus: (rep: Representative) => void;
+  onToggleStatus: (rep: Representative, isActive: boolean) => void;
+  statusLoadingIds?: string[];
 };
 
-const getRepresentativesColumns = ({ onView, onEdit, onEditEmail, onDelete, onToggleStatus }: ColumnActions): ColumnsType<Representative> => [
+const getRepresentativesColumns = ({ onView, onEdit, onEditEmail, onDelete, onToggleStatus, statusLoadingIds = [] }: ColumnActions): ColumnsType<Representative> => [
   {
     title: "",
     dataIndex: "id",
@@ -78,7 +79,9 @@ const getRepresentativesColumns = ({ onView, onEdit, onEditEmail, onDelete, onTo
           checkedChildren="Active"
           unCheckedChildren="In Active"
           checked={isActive}
-          onChange={() => onToggleStatus(rep)}
+          loading={statusLoadingIds.includes(rep.id ?? "")}
+          disabled={statusLoadingIds.includes(rep.id ?? "")}
+          onChange={(checked) => onToggleStatus(rep, checked)}
         />
       </div>
     ),

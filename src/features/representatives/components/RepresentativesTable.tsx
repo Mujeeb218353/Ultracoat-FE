@@ -9,6 +9,7 @@ import useRepresentatives from "../hooks/use-representatives";
 import getRepresentativesColumns from "./representatives.columns";
 import { Representative } from "../types/representatives.types";
 import { useOpenModal } from "@/features/modal/selectors/modal.selector";
+import useUpdateRepresentativeStatus from "../hooks/use-update-representative-status";
 
 const STATUS_OPTIONS = [
   { key: "", label: "All" },
@@ -18,6 +19,7 @@ const STATUS_OPTIONS = [
 
 const RepresentativesTable = () => {
   const openModal = useOpenModal();
+  const { mutate: updateRepresentativeStatus } = useUpdateRepresentativeStatus();
 
   const [filters, setFilters] = useState({
     search: "",
@@ -27,6 +29,7 @@ const RepresentativesTable = () => {
     skip: 0,
     limit: 10,
   });
+  const [statusLoadingId, setStatusLoadingId] = useState<string | null>(null);
 
   const search = useDebounce(filters.search);
   
@@ -42,8 +45,21 @@ const RepresentativesTable = () => {
     onEdit: (rep) => openModal("UPDATE_REPRESENTATIVE", rep), 
     onEditEmail: (rep) => openModal("UPDATE_REPRESENTATIVE_EMAIL", rep), 
     onDelete: (rep) => openModal("DELETE_REPRESENTATIVE", rep),
-    onToggleStatus: (rep) => openModal("UPDATE_REPRESENTATIVE_STATUS", rep), 
-  }), [openModal]);
+    onToggleStatus: (rep, isActive) => {
+      if (!rep.id) return;
+
+      setStatusLoadingId(rep.id);
+      updateRepresentativeStatus(
+        { id: rep.id, isActive },
+        {
+          onSettled: () => {
+            setStatusLoadingId(null);
+          },
+        },
+      );
+    },
+    statusLoadingIds: statusLoadingId ? [statusLoadingId] : [],
+  }), [openModal, statusLoadingId, updateRepresentativeStatus]);
   
   const total = data?.statistics.total ?? 0;
   const active = data?.statistics.active ?? 0;
