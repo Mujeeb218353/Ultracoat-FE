@@ -10,6 +10,10 @@ import getRepresentativesColumns from "./representatives.columns";
 import { Representative } from "../types/representatives.types";
 import { useOpenModal } from "@/features/modal/selectors/modal.selector";
 import useUpdateRepresentativeStatus from "../hooks/use-update-representative-status";
+import ExportCsvButton from "@/components/ExportCsvButton";
+import representativesApi from "../api/representatives.api";
+import { CsvColumn } from "@/utils/csv";
+import dayjs from "dayjs";
 
 const STATUS_OPTIONS = [
   { key: "", label: "All" },
@@ -80,9 +84,14 @@ const RepresentativesTable = () => {
     setPagination(prev => ({ ...prev, skip: 0 }));
   };
 
-  const handleExport = () => {
-    // TODO: export API / CSV generation implementation
-  };
+  const exportColumns: CsvColumn<Representative>[] = [
+    { header: "Name", value: (rep) => rep.name },
+    { header: "Email", value: (rep) => rep.email },
+    { header: "Phone", value: (rep) => rep.phone },
+    { header: "Location", value: (rep) => rep.location },
+    { header: "Active", value: (rep) => (rep.isActive ? "Active" : "In Active") },
+    { header: "Created At", value: (rep) => dayjs(rep.createdAt).format("HH:mm A, DD MMM YYYY") },
+  ];
 
   const currentStatusLabel = filters.isActive === null ? "Filter" : STATUS_OPTIONS.find((o) => o.key === String(filters.isActive))?.label ?? "Filter";
 
@@ -123,9 +132,18 @@ const RepresentativesTable = () => {
           <Button icon={<Filter size={14} />}>{currentStatusLabel}</Button>
         </Dropdown>
 
-        <Button icon={<Download size={14} />} onClick={handleExport}>
-          Export
-        </Button>
+          <ExportCsvButton
+            fileName="representatives"
+            fetchData={(query) => representativesApi.getRepresentatives(query)}
+            selectRows={(response) => response.salesRepresentatives}
+            columns={exportColumns}
+            buttonProps={{ icon: <Download size={14} /> }}
+            buttonLabel="Export"
+            query={{
+              search,
+              isActive: filters.isActive,
+            }}
+          />
       </div>
 
       <DataTable<Representative>
