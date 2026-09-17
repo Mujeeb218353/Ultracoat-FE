@@ -28,7 +28,6 @@ const ViewRepresentativeModal = () => {
       <DataDescriptions
       loading={isLoading}
       data={data}
-      // bordered={false}
       title="Representative Details"
       fields={[
         { 
