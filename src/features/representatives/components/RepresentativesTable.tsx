@@ -133,7 +133,7 @@ const RepresentativesTable = () => {
         </Dropdown>
 
           <ExportCsvButton
-            fileName={`Sales_Representatives_${search ? search.concat("_") : ""}${filters.isActive ? "Active_" : !filters.isActive ? "InActive_" : ""}${dayjs().format("YYYY-MM-DD_HH-mm-ss")}.csv`}
+            fileName={`Sales_Representatives_${search ? search.concat("_") : ""}${filters.isActive ? "Active_" : !filters.isActive ? "InActive_" : ""}${dayjs().format("HH-mm-ss-A_DD_MMM_YYYY")}.csv`}
             fetchData={(query) => representativesApi.getRepresentatives(query)}
             selectRows={(response) => response.salesRepresentatives}
             columns={exportColumns}

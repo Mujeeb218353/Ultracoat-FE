@@ -26,9 +26,7 @@ const getRepresentativesColumns = ({ onView, onEdit, onEditEmail, onDelete, onTo
     dataIndex: "location",
     key: "location",
     width: 30,
-    render: () => (
-      <span className="text-xs font-semibold"></span>
-    ),
+    render: () => null,
   },
   {
     title: "NAME",

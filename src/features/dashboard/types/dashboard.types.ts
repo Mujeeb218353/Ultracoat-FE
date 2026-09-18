@@ -40,9 +40,3 @@ export interface Dashboard {
   charts: Charts;
   recentActivity: RecentActivity[];
 };
-
-export interface DashboardState {
-  dashboard: Dashboard | null;
-  setDashboard: (dashboard: Dashboard) => void;
-  clearDashboard: () => void;
-}

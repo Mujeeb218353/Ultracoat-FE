@@ -1,11 +1,15 @@
-import useDashboardStore from "../store/dashboard.store";
+import { Dashboard } from "../types/dashboard.types";
+import useDashboardQuery from "../hooks/use-dashboard";
 
-export const useKPIs = () => useDashboardStore((state) => state.dashboard?.kpis);
+export const useDashboard = () => useDashboardQuery().data;
+export const useKPIs = () => useDashboardQuery().data?.kpis;
 
-export const useCustomerRatingsDistribution = () => useDashboardStore((state) => state.dashboard?.charts.customerRatingsDistribution);
-export const useMonthlyJobsCompleted = () => useDashboardStore((state) => state.dashboard?.charts.monthlyJobsCompleted);
-export const useQuotesPerRepresentative = () => useDashboardStore((state) => state.dashboard?.charts.quotesPerRepresentative);
+export const useMonthlyJobsCompleted = () => useDashboardQuery().data?.charts.monthlyJobsCompleted;
 
-export const useRecentActivity = () => useDashboardStore((state) => state.dashboard?.recentActivity);
+export const useQuotesPerRepresentative = () => useDashboardQuery().data?.charts.quotesPerRepresentative;
 
-export const useSetDashboard = () => useDashboardStore((state) => state.setDashboard);
+export const useCustomerRatingsDistribution = () => useDashboardQuery().data?.charts.customerRatingsDistribution;
+
+export const useRecentActivity = () => useDashboardQuery().data?.recentActivity;
+
+export const useDashboardData = () => useDashboardQuery().data as Dashboard | undefined;
