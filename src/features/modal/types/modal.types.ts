@@ -7,6 +7,10 @@ export type ModalType =
   | "UPDATE_REPRESENTATIVE_STATUS"
   | "UPDATE_REPRESENTATIVE_EMAIL"
   | "DELETE_REPRESENTATIVE" 
+  | "CREATE_CUSTOMER"
+  | "VIEW_CUSTOMER"
+  | "UPDATE_CUSTOMER"
+  | "DELETE_CUSTOMER"
   | null;
 
 export interface ModalStore {
