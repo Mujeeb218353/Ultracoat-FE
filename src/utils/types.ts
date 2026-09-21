@@ -27,4 +27,5 @@ export type Filters<S = Status> = {
   search?: string;
   status?: S;
   isActive?: boolean | null;
+  productId?: string;
 };
