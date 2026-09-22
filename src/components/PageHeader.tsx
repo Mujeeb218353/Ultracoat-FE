@@ -84,6 +84,13 @@ const pageHeaderData: Record<string, PageHeaderData> = {
   "die-size-management": {
     title: "Die Size Management",
     description: "Manage die cutting sizes for labels",
+    actionButtons: [
+      {
+        label: "Add Size",
+        icon: <Plus size={16} />,
+        type: "primary",
+      },
+    ],
   },
   profile: {
     title: "Profile",

@@ -11,6 +11,10 @@ export type ModalType =
   | "VIEW_CUSTOMER"
   | "UPDATE_CUSTOMER"
   | "DELETE_CUSTOMER"
+  | "CREATE_SIZE"
+  | "VIEW_SIZE"
+  | "UPDATE_SIZE"
+  | "DELETE_SIZE"
   | null;
 
 export interface ModalStore {
