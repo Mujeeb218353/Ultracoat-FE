@@ -8,9 +8,6 @@ const queryClient = new QueryClient({
       retry: (count: number, error: Error) => !(error instanceof AxiosError && error?.response?.status === 401) && count < 2,
       refetchOnWindowFocus: false,
     },
-    mutations: {
-      retry: (count: number, error: Error) => !(error instanceof AxiosError && error?.response?.status === 401) && count < 1,
-    },
   },
 });
 
