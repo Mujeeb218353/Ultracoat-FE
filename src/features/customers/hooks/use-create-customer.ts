@@ -23,8 +23,6 @@ const useCreateCustomer = () => {
           total: oldData.total + 1,
           statistics: {
             total: oldData.statistics.total + 1,
-            active: oldData.statistics.active + (newCustomer.isActive ? 1 : 0),
-            inactive: oldData.statistics.inactive + (newCustomer.isActive ? 0 : 1),
           },
         };
       });

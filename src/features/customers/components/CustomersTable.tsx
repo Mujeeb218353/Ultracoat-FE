@@ -51,8 +51,6 @@ const CustomersTable = () => {
     { header: "Email", value: (customer) => customer.email },
     { header: "Phone", value: (customer) => customer.phone },
     { header: "Location", value: (customer) => customer.location },
-    { header: "Active", value: (customer) => (customer.isActive ? "Active" : "In Active") },
-    { header: "Verified", value: (customer) => (customer.isVerified ? "Verified" : "Not Verified") },
     { header: "Created At", value: (customer) => customer.createdAt },
   ];
 
@@ -84,7 +82,7 @@ const CustomersTable = () => {
           columns={exportColumns}
           buttonProps={{ icon: <Download size={14} /> }}
           buttonLabel="Export"
-          query={{ search, isActive: filters.isActive }}
+          query={{ search }}
         />
       </div>
 

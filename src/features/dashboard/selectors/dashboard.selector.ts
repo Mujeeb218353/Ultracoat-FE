@@ -2,6 +2,7 @@ import { Dashboard } from "../types/dashboard.types";
 import useDashboardQuery from "../hooks/use-dashboard";
 
 export const useDashboard = () => useDashboardQuery().data;
+
 export const useKPIs = () => useDashboardQuery().data?.kpis;
 
 export const useMonthlyJobsCompleted = () => useDashboardQuery().data?.charts.monthlyJobsCompleted;

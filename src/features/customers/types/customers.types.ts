@@ -16,8 +16,6 @@ export interface Customer {
 
 export interface Statistics {
   total: number;
-  active: number;
-  inactive: number;
 }
 
 export interface CustomersResponse {

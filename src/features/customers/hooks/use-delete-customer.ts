@@ -15,16 +15,12 @@ const useDeleteCustomer = () => {
       queryClient.setQueriesData<CustomersResponse>({ queryKey: ["customers"] }, (old) => {
         if (!old) return old;
 
-        const deletedCustomer = old.customers.find((customer) => customer.id === id);
-
         return {
           ...old,
           customers: old.customers.filter((customer) => customer.id !== id),
           total: Math.max(0, old.total - 1),
           statistics: {
             total: Math.max(0, old.statistics.total - 1),
-            active: Math.max(0, old.statistics.active - (deletedCustomer?.isActive ? 1 : 0)),
-            inactive: Math.max(0, old.statistics.inactive - (!deletedCustomer?.isActive ? 1 : 0)),
           },
         };
       });
