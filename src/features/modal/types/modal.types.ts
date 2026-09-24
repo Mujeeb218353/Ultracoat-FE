@@ -15,6 +15,11 @@ export type ModalType =
   | "VIEW_SIZE"
   | "UPDATE_SIZE"
   | "DELETE_SIZE"
+  | "CREATE_FEATURE"
+  | "VIEW_FEATURE"
+  | "UPDATE_FEATURE"
+  | "UPDATE_FEATURE_STATUS"
+  | "DELETE_FEATURE"
   | null;
 
 export interface ModalStore {

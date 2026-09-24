@@ -80,6 +80,13 @@ const pageHeaderData: Record<string, PageHeaderData> = {
   "feature-management": {
     title: "Feature Management",
     description: "Manage coating and finishing features with sub-feature hierarchies",
+    actionButtons: [
+      {
+        label: "Add Feature",
+        icon: <Plus size={16} />,
+        type: "primary",
+      },
+    ],
   },
   "die-size-management": {
     title: "Die Size Management",
