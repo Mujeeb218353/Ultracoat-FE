@@ -78,8 +78,8 @@ const ViewRepresentativeModal = () => {
               <span className="font-medium">Name: {rep?.updater?.name}</span>
               <span className="text-xs text-gray-500">Email: {rep?.updater?.email}</span>
               <span className="text-xs text-gray-500">Phone: {rep?.updater?.phone}</span>
-              <span className="text-xs text-gray-500">Location: {rep?.updater?.location}</span>
               <span className="text-xs text-gray-500">Role: {rep?.updater?.role}</span>
+              <span className="text-xs text-gray-500">Location: {rep?.updater?.location}</span>
             </div>
           ),
         },

@@ -58,8 +58,8 @@ const ViewCustomerModal = () => {
                 <span className="font-medium">Name: {item?.updater?.name}</span>
                 <span className="text-xs text-gray-500">Email: {item?.updater?.email}</span>
                 <span className="text-xs text-gray-500">Phone: {item?.updater?.phone}</span>
-                <span className="text-xs text-gray-500">Location: {item?.updater?.location}</span>
                 <span className="text-xs text-gray-500">Role: {item?.updater?.role}</span>
+                <span className="text-xs text-gray-500">Location: {item?.updater?.location}</span>
               </div>
             ),
           },
