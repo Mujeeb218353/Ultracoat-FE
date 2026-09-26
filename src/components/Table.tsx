@@ -57,7 +57,7 @@ const DataTable = <T extends object>({
       loading={loading}
       scroll={scrollX ? { x: scrollX } : undefined}
       className={`w-full overflow-x-auto rounded-2xl ${className ?? ""}`}
-      footer={showFooter ? () => `${skip + data.length < 1 ? 0 : 1}-${total < (skip + data.length)  ? total : skip + data.length} of ${total}` : undefined}
+      footer={showFooter ? () => `${skip + data.length < 1 ? 0 : skip + 1}-${total < (skip + data.length)  ? total : skip + data.length} of ${total}` : undefined}
       pagination={pagination ? {
         pageSize: limit,
         total,
