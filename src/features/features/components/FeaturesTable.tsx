@@ -46,20 +46,18 @@ const FeaturesTable = () => {
     productId: filters.productId ?? undefined,
   });
 
-  const columns = useMemo(
-    () =>
-      getFeaturesColumns({
-        onView: (f) => openModal("VIEW_FEATURE", f),
-        onEdit: (f) => openModal("UPDATE_FEATURE", f),
-        onDelete: (f) => openModal("DELETE_FEATURE", f),
-        onToggleStatus: (f, isActive) => {
-          if (!f.id) return;
-          setStatusLoadingId(f.id);
-          updateFeatureStatus({ id: f.id, isActive }, { onSettled: () => setStatusLoadingId(null) });
-        },
-        statusLoadingIds: statusLoadingId ? [statusLoadingId] : [],
-      }),
-    [openModal, statusLoadingId, updateFeatureStatus],
+  const columns = useMemo(() => getFeaturesColumns({
+    onView: (f) => openModal("VIEW_FEATURE", f),
+    onEdit: (f) => openModal("UPDATE_FEATURE", f),
+    onDelete: (f) => openModal("DELETE_FEATURE", f),
+    onToggleStatus: (f, isActive) => {
+      if (!f.id) return;
+      setStatusLoadingId(f.id);
+      updateFeatureStatus({ id: f.id, isActive }, { onSettled: () => setStatusLoadingId(null) });
+    },
+    statusLoadingIds: statusLoadingId ? [statusLoadingId] : [],
+  }),
+  [openModal, statusLoadingId, updateFeatureStatus],
   );
 
   const total = data?.statistics?.total ?? 0;

@@ -1,6 +1,6 @@
 import { Button, Switch, TableProps, Tag } from "antd";
 import dayjs from "dayjs";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2, Layers } from "lucide-react";
 import { Feature } from "../types/features.types";
 
 type ColumnsType<T> = NonNullable<TableProps<T>["columns"]>;
@@ -33,31 +33,35 @@ const getFeaturesColumns = ({ onView, onEdit, onDelete, onToggleStatus, statusLo
     key: "name",
     width: 180,
     render: (value: string) => (
-      <span className="text-xs font-semibold">{value}</span>
+      <span className="text-[10px] font-semibold">{value}</span>
     ),
   },
   {
-    title: "Product Type",
+    title: "PRODUCT TYPE",
     dataIndex: ["productDetail", "name"],
     key: "productDetail",
     width: 240,
     render: (value: string) => (
-      <span className="text-xs text-gray-500 dark:text-gray-400">{value}</span>
+      <span className="text-[10px] text-blue-600 rounded-xl bg-blue-100 px-2 py-1 font-semibold">{value}</span>
     ),
   },
   {
-    title: "OPTION GROUPS",
+    title: "SUB-CATEGORIES",
     dataIndex: "optionGroups",
     key: "optionGroupsSummary",
     width: 250,
     render: (optionGroups: Feature["optionGroups"]) => (
       <div className="flex flex-wrap gap-1">
         {(optionGroups ?? []).map((g) => (
-          <Tag key={g.id} color="green" className="text-[10px] font-medium">
+          <Tag 
+            key={g.id} 
+            className="text-[9px]! font-bold! border-cyan-400! py-0.5! px-1!"
+          >
+            <Layers size={11} className="mr-1 text-cyan-500!" />
             {g.label}
+            <span className="text-[8px] rounded-full bg-cyan-200 p-1">{g?.values?.length ?? 0}</span>
           </Tag>
         ))}
-        {(!optionGroups || optionGroups.length === 0) && <span className="text-xs text-gray-400">—</span>}
       </div>
     ),
   },
@@ -67,11 +71,11 @@ const getFeaturesColumns = ({ onView, onEdit, onDelete, onToggleStatus, statusLo
     key: "createdAt",
     width: 180,
     render: (value: string) => (
-      <span className="text-xs text-gray-500 dark:text-gray-400">{dayjs(value).format("hh:mm A DD MMM YYYY")}</span>
+      <span className="text-xs text-gray-500 dark:text-gray-400">{dayjs(value).format("hh:mm A, DD MMM YYYY")}</span>
     ),
   },
   {
-    title: "ACTIVE STATUS",
+    title: "STATUS",
     dataIndex: "isActive",
     key: "isActive",
     width: 80,
