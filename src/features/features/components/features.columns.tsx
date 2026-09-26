@@ -59,7 +59,7 @@ const getFeaturesColumns = ({ onView, onEdit, onDelete, onToggleStatus, statusLo
           >
             <Layers size={11} className="mr-1 text-cyan-500!" />
             {g.label}
-            <span className="text-[8px] rounded-full bg-cyan-200 p-1">{g?.values?.length ?? 0}</span>
+            <span className="text-[8px] rounded-full bg-cyan-200 p-1 dark:bg-cyan-800">{g?.values?.length ?? 0}</span>
           </Tag>
         ))}
       </div>
