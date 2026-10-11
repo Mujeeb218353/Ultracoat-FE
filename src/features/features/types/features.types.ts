@@ -1,5 +1,7 @@
 import { User } from "@/features/auth/types/auth.types";
 import { Product } from "@/features/products/types/products.types";
+import { z } from "zod";
+import { createFeatureSchema, updateFeatureSchema } from "../schemas/features.schema";
 
 export type FeatureGroupSelectionType = 'SINGLE' | 'MULTIPLE';
 
@@ -51,3 +53,6 @@ export interface FeaturesResponse {
     inactive: number;
   };
 };
+
+export type CreateFeaturePayloadRequest = z.infer<typeof createFeatureSchema>;
+export type UpdateFeaturePayloadRequest = z.infer<typeof updateFeatureSchema>;

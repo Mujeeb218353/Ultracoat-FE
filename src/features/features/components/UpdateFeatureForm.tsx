@@ -7,8 +7,8 @@ import { Button, Card, Form, Input, Select } from "antd";
 import { GitBranch, Hash, Layers, ListChecks, Plus, Tag, Trash2, Type } from "lucide-react";
 import { useMemo } from "react";
 import useUpdateFeature from "../hooks/use-update-feature";
-import { updateFeatureSchema } from "../schema/features.schema";
-import { Feature, OptionFeatureGroup, OptionFeatureValue } from "../types/features.types";
+import { updateFeatureSchema } from "../schemas/features.schema";
+import { Feature, OptionFeatureGroup, OptionFeatureValue, UpdateFeaturePayloadRequest } from "../types/features.types";
 
 interface UpdateFeatureFormProps {
   feature: Feature;
@@ -24,7 +24,7 @@ interface FeatureFormValues {
 const iconCls = "w-4 h-4 text-gray-400";
 
 const UpdateFeatureForm = ({ feature }: UpdateFeatureFormProps) => {
-  const [form] = Form.useForm<FeatureFormValues>();
+  const [form] = Form.useForm<UpdateFeaturePayloadRequest>();
   const closeModal = useCloseModal();
   const { mutate: updateFeature, isPending } = useUpdateFeature();
   const { data: products, refetch: fetchProducts } = useProductsList({ enabled: false });
@@ -62,17 +62,13 @@ const UpdateFeatureForm = ({ feature }: UpdateFeatureFormProps) => {
     return list;
   }, [products, feature.productDetail]);
 
-  const getDependencyOptions = (groupIndex: number) =>
-    (optionGroups ?? []).slice(0, groupIndex).flatMap((g: OptionFeatureGroup) =>
-      (g?.values ?? [])
-        .filter((v: OptionFeatureValue) => v?.value)
-        .map((v: OptionFeatureValue) => ({
-          label: `${g.label || "Group"} → ${v.label || v.value}`,
-          value: v.value,
-        })),
-    );
+  const getDependencyOptions = (groupIndex: number) => (optionGroups ?? []).slice(0, groupIndex).flatMap((g: OptionFeatureGroup) => (g?.values ?? []).filter((v: OptionFeatureValue) => v?.value).map((v: OptionFeatureValue) => ({
+      label: `${g.label || "Group"} → ${v.label || v.value}`,
+      value: v.value,
+    })),
+  );
 
-  const handleFinish = (values: FeatureFormValues) => {
+  const handleFinish = (values: UpdateFeaturePayloadRequest) => {
     const payload = {
       ...values,
       optionGroups: (values.optionGroups ?? []).map((g: OptionFeatureGroup, gi: number) => ({
@@ -110,7 +106,11 @@ const UpdateFeatureForm = ({ feature }: UpdateFeatureFormProps) => {
         icon={<Tag className={`${iconCls} mr-1`} />}
       />
 
-      <Form.Item label="Product Type" name="productId">
+      <Form.Item 
+        label="Product Type" 
+        name="productId"
+        rules={[{ required: true, message: "Product type is required" }]}
+      >
         <Select
           allowClear
           placeholder="None"

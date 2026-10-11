@@ -17,14 +17,8 @@ import {
     Type,
 } from "lucide-react";
 import useCreateFeature from "../hooks/use-create-feature";
-import { createFeatureSchema } from "../schema/features.schema";
-import { OptionFeatureGroup, OptionFeatureValue } from "../types/features.types";
-
-interface FeatureFormValues {
-  name: string;
-  productId?: string | null;
-  optionGroups: OptionFeatureGroup[];
-}
+import { createFeatureSchema } from "../schemas/features.schema";
+import { OptionFeatureGroup, OptionFeatureValue, CreateFeaturePayloadRequest } from "../types/features.types";
 
 const iconCls = "w-4 h-4 text-gray-400";
 
@@ -40,7 +34,7 @@ const CreateFeatureModal = () => {
 
   const getDependencyOptions = (groupIndex: number) => (optionGroups ?? []).slice(0, groupIndex).flatMap((g: OptionFeatureGroup) => (g?.values ?? []).filter((v: OptionFeatureValue) => v?.value).map((v: OptionFeatureValue) => ({ label: `${g.label || "Group"} → ${v.label || v.value}`, value: v.value })));
 
-  const handleFinish = (values: FeatureFormValues) => {
+  const handleFinish = (values: CreateFeaturePayloadRequest) => {
     const payload = {
       ...values,
       optionGroups: (values.optionGroups ?? []).map((g: OptionFeatureGroup, gi: number) => ({
@@ -62,7 +56,10 @@ const CreateFeatureModal = () => {
   return (
     <Modal
       open={activeModal === "CREATE_FEATURE"}
-      onCancel={closeModal}
+      onCancel={() => {
+        form.resetFields();
+        closeModal();
+      }}
       title="Add Feature"
       description="Fill in the details below."
       icon={<Settings size={20} className="text-gray-400" />}
@@ -88,6 +85,7 @@ const CreateFeatureModal = () => {
         <Form.Item 
          label="Product Type"
          name="productId"
+         rules={[{ required: true, message: "Product type is required" }]}
         >
           <Select
             allowClear
