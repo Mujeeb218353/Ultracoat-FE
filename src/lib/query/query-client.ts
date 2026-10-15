@@ -5,8 +5,11 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 30 * 1000,
-      retry: (count: number, error: Error) => !(error instanceof AxiosError && error?.response?.status === 401) && count < 2,
+      retry: (count: number, error: Error) => !(error instanceof AxiosError && error?.response?.status === 401) && count < 1,
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retryOnMount: false,
     },
   },
 });

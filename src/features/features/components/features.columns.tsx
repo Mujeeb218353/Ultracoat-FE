@@ -1,6 +1,6 @@
 import { Button, Switch, TableProps, Tag } from "antd";
 import dayjs from "dayjs";
-import { Eye, Pencil, Trash2, Layers } from "lucide-react";
+import { Eye, Layers, Pencil, Trash2 } from "lucide-react";
 import { Feature } from "../types/features.types";
 
 type ColumnsType<T> = NonNullable<TableProps<T>["columns"]>;
@@ -71,7 +71,7 @@ const getFeaturesColumns = ({ onView, onEdit, onDelete, onToggleStatus, statusLo
     key: "createdAt",
     width: 180,
     render: (value: string) => (
-      <span className="text-xs text-gray-500 dark:text-gray-400">{dayjs(value).format("hh:mm A, DD MMM YYYY")}</span>
+      <span className="text-xs text-gray-500 dark:text-gray-400">{dayjs(value).format("DD MMM YYYY")}</span>
     ),
   },
   {

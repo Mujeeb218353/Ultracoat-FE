@@ -35,9 +35,7 @@ const useUpdateFeature = () => {
 
       success("Feature updated successfully!");
     },
-    onError: (err) => {
-      error(err, "Failed to update feature. Please try again later.");
-    },
+    
   });
 };
 

@@ -11,6 +11,7 @@ import useFeatures from "../hooks/use-features";
 import useUpdateFeatureStatus from "../hooks/use-update-feature-status";
 import { Feature } from "../types/features.types";
 import getFeaturesColumns from "./features.columns";
+import { Filters } from "@/utils/types";
 
 const STATUS_OPTIONS = [
   { key: "", label: "All" },
@@ -20,18 +21,15 @@ const STATUS_OPTIONS = [
 
 const FeaturesTable = () => {
   const openModal = useOpenModal();
-  const { data: products, refetch: fetchProducts } = useProductsList();
+  const { data: products, refetch: fetchProducts } = useProductsList({ enabled: false });
   const { mutate: updateFeatureStatus } = useUpdateFeatureStatus();
 
-  const productOptions = useMemo(
-    () => (Array.isArray(products) ? products.map((p) => ({ label: p.name, key: p.id })) : []),
-    [products],
-  );
+  const productOptions = useMemo(() => (Array.isArray(products) ? products.map((p) => ({ label: p.name, key: p.id })) : []), [products]);
 
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     search: "",
-    isActive: null as boolean | null,
-    productId: null as string | null,
+    isActive: null,
+    productId: null,
   });
   const [pagination, setPagination] = useState({ skip: 0, limit: 10 });
   const [statusLoadingId, setStatusLoadingId] = useState<string | null>(null);
@@ -56,9 +54,7 @@ const FeaturesTable = () => {
       updateFeatureStatus({ id: f.id, isActive }, { onSettled: () => setStatusLoadingId(null) });
     },
     statusLoadingIds: statusLoadingId ? [statusLoadingId] : [],
-  }),
-  [openModal, statusLoadingId, updateFeatureStatus],
-  );
+  }), [openModal, statusLoadingId, updateFeatureStatus]);
 
   const total = data?.statistics?.total ?? 0;
   const active = data?.statistics?.active ?? 0;
@@ -81,14 +77,9 @@ const FeaturesTable = () => {
     resetPage();
   };
 
-  const currentStatusLabel =
-    filters.isActive === null
-      ? "Filter"
-      : STATUS_OPTIONS.find((o) => o.key === String(filters.isActive))?.label ?? "Filter";
+  const currentStatusLabel = filters.isActive === null ? "Filter" : STATUS_OPTIONS.find((o) => o.key === String(filters.isActive))?.label ?? "Filter";
 
-  const currentProductLabel = filters.productId
-    ? productOptions.find((o) => o.key === filters.productId)?.label ?? "Filter By Product"
-    : "Filter By Product";
+  const currentProductLabel = filters.productId ? productOptions.find((o) => o.key === filters.productId)?.label ?? "Filter By Product" : "Filter By Product";
 
   const cardTitle = (
     <Space
@@ -131,7 +122,7 @@ const FeaturesTable = () => {
         <Dropdown
           trigger={["hover"]}
           onOpenChange={(open) => {
-            if (open) fetchProducts();
+            if (open && !productOptions.length) fetchProducts();
           }}
           menu={{
             items: [{ key: "", label: "All" }, ...productOptions],

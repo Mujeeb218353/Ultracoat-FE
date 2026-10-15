@@ -6,15 +6,15 @@ import { useActiveModal, useCloseModal } from "@/features/modal/selectors/modal.
 import useProductsList from "@/features/products/hooks/use-products-list";
 import { Button, Card, Form, Input, Select } from "antd";
 import {
-    Box,
-    GitBranch,
-    Hash,
-    Layers,
-    Plus,
-    Settings,
-    Tag,
-    Trash2,
-    Type,
+  Box,
+  GitBranch,
+  Hash,
+  Layers,
+  Plus,
+  Settings,
+  Tag,
+  Trash2,
+  Type,
 } from "lucide-react";
 import useCreateFeature from "../hooks/use-create-feature";
 import { createFeatureSchema } from "../schemas/features.schema";
