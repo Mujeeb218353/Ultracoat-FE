@@ -19,7 +19,7 @@ export interface Statistics {
 }
 
 export interface CustomersResponse {
-  customers: Customer[];
+  customers: Customer[] | [];
   total: number;
   statistics: Statistics;
 };

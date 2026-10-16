@@ -7,27 +7,25 @@ import { useKPIs } from "../selectors/dashboard.selector";
 const StatCardsGrid = () => {
   const kpis = useKPIs();
 
-  if (!kpis) return null;
-
   const stats = [
     {
       label: "Total Representatives",
-      value: kpis.totalRepresentatives,
+      value: kpis ? kpis.totalRepresentatives : 0,
       icon: Users,
     },
     {
       label: "Active Customers",
-      value: kpis.customers,
+      value: kpis ? kpis.customers : 0,
       icon: User,
     },
     {
       label: "Pending Quotations",
-      value: kpis.pendingQuotations,
+      value: kpis ? kpis.pendingQuotations : 0,
       icon: FileText,
     },
     {
       label: "Completed Jobs",
-      value: kpis.completedJobs,
+      value: kpis ? kpis.completedJobs : 0,
       icon: CheckCircle2,
     },
   ];

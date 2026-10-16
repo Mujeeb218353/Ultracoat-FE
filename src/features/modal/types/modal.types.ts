@@ -20,6 +20,7 @@ export type ModalType =
   | "UPDATE_FEATURE"
   | "UPDATE_FEATURE_STATUS"
   | "DELETE_FEATURE"
+  | "DELETE_QUOTATION"
   | null;
 
 export interface ModalStore {

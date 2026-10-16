@@ -25,7 +25,7 @@ export type Filters<S = Status> = {
   skip?: number;
   limit?: number;
   search?: string;
-  status?: S;
+  status?: S | null;
   isActive?: boolean | null;
-  productId?: string;
+  productId?: string | null;
 };

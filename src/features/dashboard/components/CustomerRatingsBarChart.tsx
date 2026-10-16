@@ -18,17 +18,15 @@ const CustomerRatingsBarChart = () => {
   const mode = useThemeMode();
   const isDark = mode === "dark";
 
-  if (!customerRatingsDistribution?.length) return null;
-
-  const chartData = customerRatingsDistribution.map((item) => ({
+  const chartData = customerRatingsDistribution ? customerRatingsDistribution.map((item) => ({
     label: `${item.stars} Star${item.stars > 1 ? "s" : ""}`,
-    count: item.count,
-    percent: item.percent,
+    count: item.count ?? 0,
+    percent: item.percent ?? 0,
     fill: COLORS[item.stars] ?? "#d1d5db",
   })).sort((a, b) => {
     const order = ["5 Stars", "4 Stars", "3 Stars", "2 Stars", "1 Star"];
     return order.indexOf(a.label) - order.indexOf(b.label);
-  });
+  }): [];
 
   const axisColor = isDark ? "#cbd5e1" : "#6b7280";
   const gridColor = isDark ? "rgba(255,255,255,0.1)" : "#e2e8f0";

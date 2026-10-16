@@ -19,23 +19,21 @@ const CustomerRatingsDistributionChart = () => {
   const mode = useThemeMode();
   const isDark = mode === "dark";
 
-  if (!customerRatingsDistribution?.length) return null;
-
   const textColor = isDark ? "#ffffff" : "#000000";
 
-  const chartData = customerRatingsDistribution
-    .map((item) => {
+  const chartData = customerRatingsDistribution ?
+    customerRatingsDistribution.map((item) => {
       const stars = item.stars ?? 0;
       return {
         ...item,
         stars,
         label: stars === 0 ? "Unrated" : `${stars} Star${stars > 1 ? "s" : ""}`,
-        count: item.count,
-        percent: item.percent,
+        count: item.count ?? 0,
+        percent: item.percent ?? 0,
         fill: COLORS[stars] ?? "#94A3B8",
       };
     })
-    .sort((a, b) => b.stars - a.stars);
+    .sort((a, b) => b.stars - a.stars) : [];
 
   return (
     <Card className="shadow-sm border-gray-100 dark:border-white/10 dark:bg-[#0d1b3e]">

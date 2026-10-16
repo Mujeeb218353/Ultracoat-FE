@@ -21,14 +21,12 @@ const getStatusColor = (statusLabel: string) => STATUS_COLORS[statusLabel] ?? "b
 const RecentActivityCard = () => {
   const activities = useRecentActivity();
 
-  if (!activities?.length) return null;
-
   return (
     <Card className="shadow-sm border-gray-100 dark:border-white/10 dark:bg-[#0d1b3e]">
-      <h3 className="font-semibold text-[#001259] dark:text-white mb-4">Recent Activity</h3>
+      <h3 className="font-semibold text-[#001259] dark:text-white">Recent Activity</h3>
 
-      <div className="flex flex-col">
-        {activities.map((activity, index) => (
+      <div className={`flex flex-col ${activities?.length ? "mt-4" : ""}`}>
+        {activities?.length && activities.map((activity, index) => (
           <div
             key={activity.id}
             className={`flex items-start justify-between gap-4 py-3 ${index !== activities.length - 1 ? "border-b border-gray-100 dark:border-white/10" : ""}`}
