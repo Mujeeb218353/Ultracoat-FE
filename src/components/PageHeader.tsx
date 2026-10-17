@@ -140,7 +140,7 @@ const PageHeader = ({ onClick, onSecondaryClick, className }: PageHeaderProps) =
 
   return (
     <div
-      className={`flex-1 flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-0.5 border-gray-200 dark:border-white/10 p-5 bg-white dark:bg-transparent ${className}`}
+      className={`flex-1 flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-0.5 border-gray-200 dark:border-white/10 p-5 dark:bg-transparent ${className}`}
     >
       <div className="flex flex-col gap-1 text-center sm:text-left">
         <h1 className="text-2xl font-semibold">{title}</h1>
