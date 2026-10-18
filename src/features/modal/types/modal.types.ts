@@ -20,6 +20,7 @@ export type ModalType =
   | "UPDATE_FEATURE"
   | "UPDATE_FEATURE_STATUS"
   | "DELETE_FEATURE"
+  | "PREVIEW_QUOTATION"
   | "DELETE_QUOTATION"
   | null;
 

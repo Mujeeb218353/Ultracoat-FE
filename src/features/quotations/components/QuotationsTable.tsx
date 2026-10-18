@@ -3,7 +3,7 @@
 import DataTable from "@/components/Table";
 import useProductsList from "@/features/products/hooks/use-products-list";
 import useDebounce from "@/hooks/use-debounce";
-import { Button, Card, Dropdown, Input, Space } from "antd";
+import { Button, Card, Dropdown, Input, Space, Tag } from "antd";
 import { Filter, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Filters, Status } from "@/utils/types";
@@ -81,10 +81,14 @@ const QuotationsTable = () => {
       className="w-full flex justify-center sm:justify-between items-center flex-col sm:flex-row gap-2 sm:gap-4 my-4 sm:my-0"
     >
       <span className="font-semibold text-lg">Quotations</span>
-      <Space size="small">
-        {/* <Tag color="blue">Total: {total}</Tag> */}
-        {/* <Tag color="green">Active: {active}</Tag>
-        <Tag color="red">Inactive: {inactive}</Tag> */}
+      <Space size="small" className="flex! flex-wrap! gap-2! justify-center! sm:justify-end!">
+        <Tag color="blue">Total: {data?.statistics?.total ?? 0}</Tag>
+        <Tag color="gray">Pending: {data?.statistics?.pending ?? 0}</Tag>
+        <Tag color="purple">Quoted: {data?.statistics?.quoted ?? 0}</Tag>
+        <Tag color="orange">Sent To Customer: {data?.statistics?.sentToCustomer ?? 0}</Tag>
+        <Tag color="green">Approved: {data?.statistics?.approved ?? 0}</Tag>
+        <Tag color="red">Rejected: {data?.statistics?.rejected ?? 0}</Tag>
+        <Tag color="magenta">Re-Quote: {data?.statistics?.reQuote ?? 0}</Tag>
       </Space>
     </Space>
   );
@@ -93,7 +97,7 @@ const QuotationsTable = () => {
 
   return (
       <Card title={cardTitle}>
-        <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-3 sm:p-4">
+        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-3 sm:p-4 mb-2 sm:mb-0">
           <Input
             allowClear
             value={filters.search}

@@ -1,8 +1,8 @@
-import { Button, Switch, TableProps, Tag } from "antd";
-import dayjs from "dayjs";
-import { Eye, Box, Pencil, Trash2 } from "lucide-react";
-import { Quotation } from "../types/quotations.types";
 import Badge from "@/components/Badge";
+import { Button, TableProps } from "antd";
+import dayjs from "dayjs";
+import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Quotation } from "../types/quotations.types";
 
 type ColumnsType<T> = NonNullable<TableProps<T>["columns"]>;
 
@@ -65,18 +65,24 @@ const getQuotationsColumns = ({ onView, onEdit, onDelete }: ColumnActions): Colu
     key: "productType",
     // align: "center",
     render: (value: string) => (
-        // <div className="flex justify-center">
       <Badge 
         kind="productType" 
         value={value ?? "Unknown"} 
       />
-    //   </div>
     ),
   },
   {
     title: "MATERIAL",
     dataIndex: "material",
     key: "material",
+    render: (value: string) => (
+      <span>{value ?? "-"}</span>
+    ),
+  },
+  {
+    title: "PAPER TYPE",
+    dataIndex: "paperType",
+    key: "paperType",
     render: (value: string) => (
       <span>{value ?? "-"}</span>
     ),

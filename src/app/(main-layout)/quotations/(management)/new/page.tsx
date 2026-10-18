@@ -17,32 +17,54 @@ import LeadTimeSection from "@/features/quotations/components/LeadTimeFreightSec
 import NotesSection from "@/features/quotations/components/NotesSection";
 import { Eye } from "lucide-react";
 import useCreateQuotation from "@/features/quotations/hooks/use-create-quotation";
-
-const getQuantity = (value: string | number | undefined) => {
-
-  if (typeof value === "number") return value;
-  if (typeof value === "string") {
-    const parsed = parseInt(value.replace(/[,\s]/g, ""), 10);
-    return isNaN(parsed) ? undefined : parsed;
-  }
-  return undefined;
-
-}
+import Modal from "@/components/Modal";
+import { useOpenModal, useCloseModal, useActiveModal } from "@/features/modal/selectors/modal.selector";
+import QuotationPreviewModal from "@/features/quotations/components/QuotationPreviewModal";
+import { useMemo } from "react";
+import buildPreviewQuotation from "@/features/quotations/utils/build.preview.quotation";
+import useCustomersList from "@/features/customers/hooks/use-customer-list";
+import useFeaturesList from "@/features/features/hooks/use-features-list";
+import { CustomersResponse } from "@/features/customers/types/customers.types";
+import { Feature } from "@/features/features/types/features.types";
 
 const CreateQuotationPage = () => {
   const router = useRouter();
+
+  const openModal = useOpenModal();
+  const closeModal = useCloseModal();
+  const activeModal = useActiveModal();
+
   const [form] = Form.useForm<QuotationFormState>();
+  const values = Form.useWatch([], form);
+
   const { mutate: createQuotation, isPending: loading } = useCreateQuotation();
 
   const productId = Form.useWatch("productId", form);
-
   const { data: products } = useProductsList();
   const selectedProduct = Array.isArray(products) ? products.find((p) => p.id === productId) : undefined;
+
+  const customerId = Form.useWatch("customerId", form);
+  const { data: customersData } = useCustomersList({ enabled: false });
+  const rawCustomersData = customersData as CustomersResponse | undefined;
+
+  const { data: featuresData } = useFeaturesList({ enabled: !!productId });
+  const rawFeaturesData = featuresData as { features: Feature[] } | undefined;
+
+  const selectedCustomer = rawCustomersData?.customers.find((c) => c.id === customerId);
+  const features = useMemo(() => rawFeaturesData?.features ?? [], [rawFeaturesData]);
 
   const handleValuesChange = (changed: Partial<QuotationFormState>) => {
     if (changed.productId) form.setFieldsValue({ specs: {}, features: [] });
   };
 
+  const previewQuotation = useMemo(() => {
+    return values ? buildPreviewQuotation(values, selectedProduct, selectedCustomer, features) : undefined
+  }, [values, selectedProduct, selectedCustomer, features]);
+
+  const openPreview = () => {
+    form.validateFields().then(() => openModal("PREVIEW_QUOTATION")).catch(() => {});
+  };
+   
   const handleFinish = (values: QuotationFormState) => {
 
     const payload: CreateQuotationPayload = {
@@ -53,14 +75,15 @@ const CreateQuotationPage = () => {
         optionValueIds: Object.values(f.options).flat(),
       })),
       material: values.specs?.material,
-      size: values.specs?.size,
-      paperType: values.specs?.paperType,
+      size: values.specs?.sizeOther ?? values.specs?.size,
+      paperType: values.specs?.paperTypeOther ?? values.specs?.paperType,
       documentCategory: values.specs?.documentCategory,
       quantity: parseInt(String(values.specs?.quantityOther ?? values.specs?.quantity ?? 0).replace(/[,\s]/g, ""), 10),
       leadTime: values.leadTime,
       freightCharges: values.freightCharges!,
       additionalNotes: values.additionalNotes || undefined,
     };
+
     console.log(values, payload)
 
     createQuotation(payload, {
@@ -81,9 +104,9 @@ const CreateQuotationPage = () => {
     >
       <CreateQuotationHeader
         onBack={() => router.push("/quotations")}
-        onPreview={() => {}}
+        onPreview={openPreview}
         onSubmit={() => form.submit()}
-        submitting={false}
+        submitting={loading}
       />
 
       <div className="min-w-xs flex flex-col justify-center items-center gap-4 p-4">
@@ -123,7 +146,7 @@ const CreateQuotationPage = () => {
           <NotesSection />
         </Form.Item>
 
-        <Form.Item className="mb-0 w-4xl flex items-center justify-end gap-2">
+        <Form.Item className="mb-0 w-sm sm:w-lg xl:w-4xl flex items-center justify-end gap-2">
           <Button 
             icon={<Eye size={14} />} 
             onClick={() => {}} 
@@ -140,6 +163,23 @@ const CreateQuotationPage = () => {
           </Button>
         </Form.Item>
       </div>
+
+      <Modal
+        open={activeModal === "PREVIEW_QUOTATION"}
+        onCancel={closeModal}
+        title="Quotation Preview"
+        description="This is a preview of the quotation before submission."
+        icon={<Eye size={14} />}
+        width={800}
+        centered={false}
+      > 
+        <QuotationPreviewModal
+          quotation={previewQuotation}
+          loading={loading}
+          onClose={closeModal}
+          onConfirm={closeModal}
+        />
+      </Modal>
     </Form>
   );
 };

@@ -1,6 +1,7 @@
 import { ArrowLeft, Eye, Send } from "lucide-react";
 import { Button } from "antd";
 
+
 interface Props {
   onBack: () => void;
   onPreview: () => void;
@@ -12,7 +13,7 @@ interface Props {
 
 const QuotationHeader = ({ onBack, onPreview, onSubmit, disabled, submitting }: Props) => { 
   return (
-    <header className="sticky top-0 z-10 flex items-center justify-between px-6 py-3 border-b border-gray-200 dark:border-white/10 bg-white dark:bg-transparent">
+    <header className="sticky top-18 z-10 flex flex-col sm:flex-row gap-4 items-center justify-between px-6 py-3 border-b border-gray-200 dark:border-white/10 bg-white dark:bg-transparent">
       <div className="flex items-center justify-between  gap-4">
         <div 
           className="cursor-pointer flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-r border-gray-200 dark:border-white/10 pr-2"

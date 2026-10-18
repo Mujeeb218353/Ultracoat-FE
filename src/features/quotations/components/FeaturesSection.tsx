@@ -62,13 +62,7 @@ const FeaturesPicker = ({ features, loading, value = [], onChange }: PickerProps
 
                   const handleSelect = (id: string) => {
                     const isPicked = picked.includes(id);
-                    const next = multiple
-                      ? isPicked
-                        ? picked.filter((p) => p !== id)
-                        : [...picked, id]
-                      : isPicked
-                      ? []
-                      : [id];
+                    const next = multiple ? isPicked ? picked.filter((p) => p !== id) : [...picked, id] : isPicked ? [] : [id];
                     setOption(f, g.id!, next);
                   };
 
