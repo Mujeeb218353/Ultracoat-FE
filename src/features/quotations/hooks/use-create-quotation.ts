@@ -12,7 +12,7 @@ const useCreateQuotation = () => {
   return useMutation({
     mutationFn: (payload: CreateQuotationPayload) => quotationsApi.createQuotation(payload),
     onSuccess: (newQuotation: Quotation, variables) => {
-      const key = ["quotations", { skip: 0, limit: 10, search: "", status: null, productId: variables.productId }];
+      const key = ["quotations", { skip: 0, limit: 10, search: "", status: null, productId: variables.productType }];
       
       queryClient.setQueryData<QuotationsResponse>(key, (oldData) => {
         if (!oldData) return oldData;
