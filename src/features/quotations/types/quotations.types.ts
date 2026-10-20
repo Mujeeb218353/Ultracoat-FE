@@ -1,16 +1,30 @@
 import { Customer } from "@/features/customers/types/customers.types";
 import { Product } from "@/features/products/types/products.types";
 import { User } from "@/features/auth/types/auth.types";
-import { Feature } from "@/features/features/types/features.types";
+import { Feature, OptionFeatureValue } from "@/features/features/types/features.types";
 
 export type FreightCharges = 'Free of Karachi' | 'Outside Karachi';
 
 export type QuotationStatus = 'PENDING' | 'QUOTED' | 'APPROVED' | 'REJECTED' | 'RE QUOTE' | 'SENT TO CUSTOMER';
 
+export interface QuotationFeatureValue {
+  id?: string;
+  optionValue?: Pick<OptionFeatureValue, "id" | "label" | "value" | "sortOrder">;
+}
+
+export interface QuotationFeature {
+  id?: string;
+  feature?: Pick<Feature, "id" | "name">;
+  selectedValues?: QuotationFeatureValue[];
+}
+
 export interface Quotation {
   id?: string;
+  customerDetail?: Customer;
   customer?: Customer;
+  productDetail?: Product;
   productType?: Product;
+  quotationFeatures?: QuotationFeature[];
   features?: Feature[];
   material?: string;
   size?: string;
@@ -80,7 +94,7 @@ export interface QuotationFormState {
 export interface CreateQuotationPayload {
   customer: string;
   productType: string;
-  features: { featureId: string; optionValueIds: string[] }[];
+  features: { featureId: string; selectedValueIds: string[] }[];
   material?: string;
   size?: string;
   paperType?: string;

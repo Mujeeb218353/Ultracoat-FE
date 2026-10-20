@@ -1,9 +1,9 @@
 import { Filters } from "@/utils/types";
 
 const quotationsQueryKeys = {
-  quotations: (query: Filters) => ["quotation", query],
+  quotations: (query: Filters) => ["quotations", query],
   quotationsList: () => ["quotations", "list"],
-  quotation: (id: string) => ["quotations", id],
+  quotation: (id: string) => ["quotation", id],
 } as const;
 
 export default quotationsQueryKeys;

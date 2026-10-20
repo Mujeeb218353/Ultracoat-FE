@@ -13,11 +13,11 @@ const quotationsApi = {
   getQuotationsList: () => api.get<ApiResponse<Quotation[]>>(quotationsEndpoints.getQuotationsList()).then((res) => res.data.data),
   getQuotationById: (id: string) => api.get<ApiResponse<Quotation>>(quotationsEndpoints.getQuotationById(id)).then((res) => res.data.data),
   updateQuotation: (id: string, payload: Quotation) => api.put<ApiResponse<Quotation>>(quotationsEndpoints.updateQuotation(id), payload).then((res) => res.data.data),
-  uploadQuotationFile: (id: string, payload: Quotation["file"]) => api.put<ApiResponse<Quotation>>(quotationsEndpoints.uploadQuotationFile(id), payload).then((res) => res.data.data),
-  quoteQuotationAmount: (id: string, payload: Quotation["amount"]) => api.post<ApiResponse<Quotation>>(quotationsEndpoints.quoteQuotationAmount(id), payload).then((res) => res.data.data),
+  uploadQuotationFile: (id: string, payload: FormData) => api.put<ApiResponse<Quotation>>(quotationsEndpoints.uploadQuotationFile(id), payload).then((res) => res.data.data),
+  quoteQuotationAmount: (id: string, payload: Quotation["amount"]) => api.put<ApiResponse<Quotation>>(quotationsEndpoints.quoteQuotationAmount(id), { amount: payload }).then((res) => res.data.data),
   sendQuotationToCustomer: (id: string) => api.post<ApiResponse<Quotation>>(quotationsEndpoints.sendQuotationToCustomer(id)).then((res) => res.data.data),
   getQuotationPresignedUrl: (id: string) => api.get<ApiResponse<string>>(quotationsEndpoints.getQuotationPresignedUrl(id)).then((res) => res.data.data),
-  updateQuotationStatus: (id: string, payload: Quotation["status"]) => api.put<ApiResponse<Quotation>>(quotationsEndpoints.updateQuotationStatus(id), payload).then((res) => res.data.data),
+  updateQuotationStatus: (id: string, payload: Quotation["status"]) => api.put<ApiResponse<Quotation>>(quotationsEndpoints.updateQuotationStatus(id), { status: payload }).then((res) => res.data.data),
   deleteQuotation: (id: string) => api.delete<ApiResponse<null>>(quotationsEndpoints.deleteQuotation(id)).then((res) => res.data.data),
 };
 

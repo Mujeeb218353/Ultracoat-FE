@@ -3,11 +3,12 @@ interface SectionCardProps {
   title: string;
   children: React.ReactNode;
   className?: string;
+  headerClassName?: string;
 };
 
-const SectionCard = ({ icon: Icon, title, children, className }: SectionCardProps) => (
+const SectionCard = ({ icon: Icon, title, children, className, headerClassName }: SectionCardProps) => (
   <section className={`w-sm sm:w-lg xl:w-4xl rounded-xl border border-gray-300 dark:border-white/10 shadow-sm ${className}`}>
-    <header className="flex items-center gap-3 border-b border-gray-300 dark:border-white/10 px-4 py-3">
+    <header className={`flex items-center gap-3 border-b border-gray-300 dark:border-white/10 px-4 py-3 ${headerClassName}`}>
       <span className="flex h-8 w-8 items-center justify-center rounded-lg">
         <Icon size={14} />
       </span>

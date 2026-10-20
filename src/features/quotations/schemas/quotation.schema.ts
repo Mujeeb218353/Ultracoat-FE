@@ -54,7 +54,7 @@ export const toCreatePayload = (v: QuotationFormOutput): CreateQuotationPayload 
   productType: v.productId,
   features: v.features.map((f) => ({
     featureId: f.featureId,
-    optionValueIds: Object.values(f.options).flat(),
+    selectedValueIds: Object.values(f.options).flat(),
   })),
   material: v.specs.material,
   size: v.specs.size,

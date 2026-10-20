@@ -19,7 +19,7 @@ import { Eye } from "lucide-react";
 import useCreateQuotation from "@/features/quotations/hooks/use-create-quotation";
 import Modal from "@/components/Modal";
 import { useOpenModal, useCloseModal, useActiveModal } from "@/features/modal/selectors/modal.selector";
-import QuotationPreviewModal from "@/features/quotations/components/QuotationPreviewModal";
+import QuotationPreviewContent from "@/features/quotations/components/QuotationPreviewModal";
 import { useMemo } from "react";
 import buildPreviewQuotation from "@/features/quotations/utils/build.preview.quotation";
 import useCustomersList from "@/features/customers/hooks/use-customer-list";
@@ -72,7 +72,7 @@ const CreateQuotationPage = () => {
       productType: values.productId!,
       features: (values.features ?? []).map((f) => ({
         featureId: f.featureId,
-        optionValueIds: Object.values(f.options).flat(),
+        selectedValueIds: Object.values(f.options).flat(),
       })),
       material: values.specs?.material,
       size: values.specs?.sizeOther ?? values.specs?.size,
@@ -84,11 +84,9 @@ const CreateQuotationPage = () => {
       additionalNotes: values.additionalNotes || undefined,
     };
 
-    console.log(values, payload)
-
     createQuotation(payload, {
-      onSuccess: () => {
-        router.push(`/quotations`);
+      onSuccess: (q) => {
+        router.push(`/quotations/${q.id}`);
       }
     });
   };
@@ -173,7 +171,7 @@ const CreateQuotationPage = () => {
         width={800}
         centered={false}
       > 
-        <QuotationPreviewModal
+        <QuotationPreviewContent
           quotation={previewQuotation}
           loading={loading}
           onClose={closeModal}
