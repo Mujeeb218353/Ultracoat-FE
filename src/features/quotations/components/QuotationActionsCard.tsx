@@ -9,12 +9,14 @@ import useSendQuotationToCustomer from "../hooks/use-send-quotation-to-customer"
 import useUpdateQuotationStatus from "../hooks/use-update-quotation-status";
 import useDownloadQuotationFile from "../hooks/use-download-quotation-file";
 import { Quotation } from "../types/quotations.types";
+import { useRouter } from "next/navigation";
 
 interface Props {
   quotation: Quotation;
 }
 
 const QuotationActionsCard = ({ quotation }: Props) => {
+  const router = useRouter();
   const id = quotation.id ?? "";
   const status = quotation.status;
   const isLabel = quotation.productDetail?.name === "Label";
@@ -27,22 +29,35 @@ const QuotationActionsCard = ({ quotation }: Props) => {
   const uploadQuotationFile = useUploadQuotationFile(id);
   const sendToCustomer = useSendQuotationToCustomer(id);
   const updateStatus = useUpdateQuotationStatus(id);
-  const download = useDownloadQuotationFile(id);
+  const download = useDownloadQuotationFile(id, quotation.file ?? "quotation.pdf");
 
 
   const handleQuote = () => {
-    if (amount === null || amount <= 0) return;
-    quoteAmount.mutate(amount);
+    if (amount !== null && amount > 0) {
+      quoteAmount.mutate(amount, {
+        onSuccess: () => {
+          setAmount(null);
+          router.push(`/quotations/${id}`);
+        },
+      });
+    }
     const file = fileList[0]?.originFileObj;
-    if (isLabel && file) uploadQuotationFile.mutate(file);
-    setFileList([]);
+    if (isLabel && file) uploadQuotationFile.mutate(file as File, {
+      onSuccess: () => {
+        setFileList([]);
+        router.push(`/quotations/${id}`);
+      },
+    });
   };
+
+  const isStatusLoading = (s: string) => updateStatus.isPending && updateStatus.variables === s;
+
 
   return (
     <SectionCard 
       icon={DollarSign} 
       title="Quotation"
-      className="w-xs!"
+      className="w-full! sm:w-40! md:w-60! lg:w-80! xl:w-96!"
       headerClassName="bg-[#001529] rounded-t-lg text-white"
     >
       <div className="flex flex-col gap-4">
@@ -84,7 +99,7 @@ const QuotationActionsCard = ({ quotation }: Props) => {
           </>
         )}
 
-        {!canQuote && (
+        {quotation?.amount && (
           <div className="flex items-center justify-between rounded-lg bg-[#12244a] px-4 py-3 text-white">
             <span className="text-xs font-bold">Quoted Amount</span>
             <span className="text-lg font-bold">Rs {(quotation.amount ?? 0).toLocaleString()}</span>
@@ -92,22 +107,54 @@ const QuotationActionsCard = ({ quotation }: Props) => {
         )}
 
         {quotation.file && (
-          <Button icon={<Download size={14} />} loading={download.isPending} onClick={() => download.mutate()}>
+          <Button 
+            icon={<Download size={14} />} 
+            loading={download.isPending} 
+            onClick={() => download.mutate()}
+          >
             Download File
           </Button>
         )}
 
         {status === "QUOTED" && (
-          <Button type="primary" icon={<Send size={14} />} loading={sendToCustomer.isPending} onClick={() => sendToCustomer.mutate()} className="bg-green-700! hover:bg-green-800!">
+          <Button 
+            type="primary" 
+            icon={<Send size={14} />} 
+            loading={sendToCustomer.isPending} 
+            onClick={() => sendToCustomer.mutate(undefined, {
+              onSuccess: () => {
+                router.push(`/quotations/${id}`);
+              }
+            })} 
+            className="bg-green-700! hover:bg-green-800!"
+          >
             Send to Customer
           </Button>
         )}
 
         {status === "SENT TO CUSTOMER" && (
           <div className="flex flex-col gap-2">
-            <Button type="primary" loading={updateStatus.isPending} onClick={() => updateStatus.mutate("APPROVED")} className="bg-green-700! hover:bg-green-800!">Approve</Button>
-            <Button danger loading={updateStatus.isPending} onClick={() => updateStatus.mutate("REJECTED")}>Reject</Button>
-            <Button loading={updateStatus.isPending} onClick={() => updateStatus.mutate("RE QUOTE")}>Re-Quote</Button>
+            <Button 
+              type="primary" 
+              loading={isStatusLoading("APPROVED")} 
+              onClick={() => updateStatus.mutate("APPROVED")} 
+              className="bg-green-700! hover:bg-green-800!"
+            >
+              Approve
+            </Button>
+            <Button 
+              danger 
+              loading={isStatusLoading("REJECTED")} 
+              onClick={() => updateStatus.mutate("REJECTED")}
+            >
+              Reject
+            </Button>
+            <Button 
+              loading={isStatusLoading("RE QUOTE")} 
+              onClick={() => updateStatus.mutate("RE QUOTE")}
+            >
+              Re-Quote
+            </Button>
           </div>
         )}
       </div>

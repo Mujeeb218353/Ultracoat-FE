@@ -147,7 +147,7 @@ const CreateQuotationPage = () => {
         <Form.Item className="mb-0 w-sm sm:w-lg xl:w-4xl flex items-center justify-end gap-2">
           <Button 
             icon={<Eye size={14} />} 
-            onClick={() => {}} 
+            onClick={openPreview} 
             className="mr-2 "
           >
             Preview

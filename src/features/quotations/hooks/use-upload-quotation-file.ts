@@ -46,6 +46,8 @@ const useUploadQuotationFile = (id: string) => {
       
       success("Quotation file uploaded successfully!");
 
+      queryClient.setQueryData(["quotation", updatedQuotation.id], updatedQuotation);
+
     },
     onError: (err) => {
       error(err, "Failed to save quotation amount. Please try again later.");

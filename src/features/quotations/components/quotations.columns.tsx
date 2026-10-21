@@ -137,7 +137,7 @@ const getQuotationsColumns = ({ onView, onEdit, onDelete }: ColumnActions): Colu
           icon={<Eye size={15} className="text-blue-500!" />}
           title="View"
         />
-        <Button
+        {/* <Button
           type="text"
           onClick={() => onEdit(f)}
           icon={<Pencil size={15} className="text-gray-500!" />}
@@ -148,7 +148,7 @@ const getQuotationsColumns = ({ onView, onEdit, onDelete }: ColumnActions): Colu
           onClick={() => onDelete(f)}
           icon={<Trash2 size={15} className="text-red-500!" />}
           title="Delete"
-        />
+        /> */}
       </div>
     ),
   },

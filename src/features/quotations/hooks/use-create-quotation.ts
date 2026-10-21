@@ -39,6 +39,8 @@ const useCreateQuotation = () => {
         ["dashboard"],
       ]);
 
+      queryClient.setQueryData(["quotation", newQuotation.id], newQuotation);
+
       success("Quotation created successfully!");
     },
     onError: (err) => {

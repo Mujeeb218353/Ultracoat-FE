@@ -42,6 +42,8 @@ const useQuoteQuotation = (id: string) => {
       
       success("Quotation amount quoted successfully!");
 
+      queryClient.setQueryData(["quotation", updatedQuotation.id], updatedQuotation);
+
     },
     onError: (err) => {
       error(err, "Failed to save quotation amount. Please try again later.");

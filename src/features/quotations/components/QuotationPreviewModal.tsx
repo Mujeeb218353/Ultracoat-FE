@@ -62,7 +62,7 @@ const QuotationPreviewContent = ({ quotation, loading, onClose, onConfirm }: Pro
         <div>
           <div className="text-[10px] font-bold uppercase text-gray-400">To:</div>
           <div className="text-xs font-bold text-gray-800 dark:text-gray-100">{customer?.company ?? customer?.name ?? "—"}</div>
-          {customer?.name && <div className="text-[11px] text-gray-400">Attn: {customer.name}</div>}
+          {customer?.name && <div className="text-[11px] text-gray-400">{customer.name}</div>}
           {customer?.phone && <div className="text-[11px] text-gray-400">{customer.phone}</div>}
         </div>
       </div>
