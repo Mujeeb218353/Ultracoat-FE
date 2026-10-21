@@ -1,15 +1,13 @@
 import { ArrowLeft, Eye, Send } from "lucide-react";
 import { Button } from "antd";
 
-
 interface Props {
   onBack: () => void;
   onPreview: () => void;
   onSubmit: () => void;
   disabled?: boolean;
   submitting?: boolean;
-}
-
+};
 
 const QuotationHeader = ({ onBack, onPreview, onSubmit, disabled, submitting }: Props) => { 
   return (
