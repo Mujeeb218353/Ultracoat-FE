@@ -28,4 +28,5 @@ export type Filters<S = Status> = {
   status?: S | null;
   isActive?: boolean | null;
   productId?: string | null;
+  quotationId?: string | null;
 };

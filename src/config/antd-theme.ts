@@ -90,9 +90,15 @@ const getAntdTheme = (mode: ThemeMode): ThemeConfig => {
         controlHeight: 42,
         borderRadius: 10,
         colorBgContainer: darkModeEnabled ? DARK_BG : "#ffffff",
-        optionSelectedBg: darkModeEnabled ? "#2f2f2f" : PRIMARY_BG,
-        optionSelectedColor: darkModeEnabled ? "#f3f4f6" : PRIMARY,
-        optionActiveBg: darkModeEnabled ? "#333333" : SECONDARY_BG,
+        optionSelectedBg: darkModeEnabled ? SELECTED_COLOR : PRIMARY_BG,
+        optionSelectedColor: darkModeEnabled ? "#ffffff" : PRIMARY,
+        optionActiveBg: darkModeEnabled ? "#3f3f46" : SECONDARY_BG,
+      },
+
+      Pagination: {
+        itemActiveBg: darkModeEnabled ? SELECTED_COLOR : "#ffffff",
+        itemActiveColor: darkModeEnabled ? "#ffffff" : PRIMARY,
+        itemActiveColorHover: darkModeEnabled ? "#ffffff" : PRIMARY_HOVER,
       },
 
       Card: {

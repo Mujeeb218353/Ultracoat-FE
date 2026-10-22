@@ -19,6 +19,9 @@ export const statusConfig: Record<string, { style: string }> = {
   "PENDING": {
     style: "bg-gray-50! dark:bg-gray-800! border-gray-300! dark:border-gray-600! text-gray-600! dark:text-gray-300!",
   },
+  "SUBMITTED": {
+    style: "bg-green-50! dark:bg-green-900/30! border-green-300! dark:border-green-700! text-green-700! dark:text-green-300!",
+  },
   "QUOTED": {
     style: "bg-blue-50! dark:bg-blue-900/30! border-blue-300! dark:border-blue-700! text-blue-700! dark:text-blue-300!",
   },
