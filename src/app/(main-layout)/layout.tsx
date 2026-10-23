@@ -8,8 +8,17 @@ import { useEffect, useRef, useState } from "react";
 import EmailVerification from "@/features/auth/components/EmailVerification";
 import LogoutModal from "@/features/auth/components/LogoutModal";
 import { useRouter, usePathname } from "next/navigation";
+import TablePageSkeleton from "@/components/skeletons/TablePageSkeleton";
 
 const { Content } = Layout;
+
+const CARD_TABLE_PAGES = ["/follow-ups", "/feedbacks", "/finished-jobs", "/quotations"];
+const PLAIN_TABLE_PAGES = [
+  "/representatives",
+  "/customers",
+  "/product-management/die-size-management",
+  "/product-management/feature-management",
+];
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -72,11 +81,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     };
   }, [isMobile, collapsed]);
 
-  if (!hasHydrated) {
+  const isPlainTablePage = PLAIN_TABLE_PAGES.includes(pathname);
+  const showHydrationSkeleton =
+    !hasHydrated && (CARD_TABLE_PAGES.includes(pathname) || isPlainTablePage);
+
+  if (!hasHydrated && !showHydrationSkeleton) {
     return null;
   }
 
-  if (!isAuthenticated) {
+  if (hasHydrated && !isAuthenticated) {
     return null;
   }
 
@@ -102,7 +115,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           />
           <Content className="flex-1 flex flex-col overflow-y-scroll overflow-x-hidden">
             <div className="flex-1 flex flex-col pt-18">
-              {user && !user.isVerified ? (
+              {showHydrationSkeleton ? (
+                <TablePageSkeleton variant={isPlainTablePage ? "table" : "card"} isBtnVisible={isPlainTablePage} />
+              ) : user && !user.isVerified ? (
                 <EmailVerification />
               ) : (
                 <div>{children}</div>
