@@ -1,9 +1,5 @@
-import React from 'react'
+import TableCardSkeleton from "@/components/skeletons/TableCardSkeleton";
 
-const loading = () => {
-  return (
-    <div>loading</div>
-  )
-}
+const Loading = () => <TableCardSkeleton />;
 
-export default loading
+export default Loading;

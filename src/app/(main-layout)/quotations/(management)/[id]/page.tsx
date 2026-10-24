@@ -1,35 +1,25 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Building2, Box, Tag, Phone, Mail, UserCheck, Calendar } from "lucide-react";
+import DetailHeader from "@/components/DetailHeader";
+import { useParams } from "next/navigation";
+import { Building2, Box, Tag, Phone, Mail, UserCheck, Calendar } from "lucide-react";
 import { Skeleton } from "antd";
 import SectionCard from "@/features/quotations/components/SectionCard";
 import QuotationActionsCard from "@/features/quotations/components/QuotationActionsCard";
 import useQuotationById from "@/features/quotations/hooks/use-quotation-by-id";
 import Badge from "@/components/Badge";
 import dayjs from "dayjs";
-
-interface FieldProps {
-  label: string;
-  value?: string | number;
-  className?: string;
-}
-
-
-const Field = ({ label, value, className }: FieldProps) => (
-  <div className="flex flex-col gap-0.5">
-    <span className="text-gray-400">{label}</span>
-    <span className={`font-semibold text-gray-800 dark:text-gray-100 ${className || ""}`}>{value ?? "—"}</span>
-  </div>
-);
+import Field from "@/components/Field";
 
 const QuotationDetailPage = () => {
-  const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const { data: quotation, isPending } = useQuotationById(id);
 
   if (isPending) return <Skeleton active className="p-6" />;
-  if (!quotation) return <div className="p-6 text-sm text-gray-500">Quotation not found.</div>;
+  if (!quotation) return <div className="flex flex-col gap-4">
+        <DetailHeader backHref="/quotations" title="Quotation" />
+        <div className="p-6 text-sm text-gray-500">Quotation not found.</div>
+      </div>;
 
   const customer = quotation.customerDetail;
   const creator = quotation.creator;
@@ -38,28 +28,12 @@ const QuotationDetailPage = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <header className="sticky top-18 z-10 flex flex-col sm:flex-row gap-4 items-center justify-between px-6 py-3 border-b border-gray-200 dark:border-white/10 bg-white dark:bg-transparent">
-        <div className="flex items-center justify-between gap-4">
-          <div
-            className="cursor-pointer flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-r border-gray-200 dark:border-white/10 pr-2"
-            onClick={() => router.push("/quotations")}
-          >
-            <ArrowLeft size={14} />
-            Back
-          </div>
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-3">
-              <h1 className="text-base font-bold">{quotation.id?.slice(0, 8)}</h1>
-              {quotation.status && (
-                <Badge kind="status" value={quotation.status} />
-              )}
-            </div>
-            <p className="text-xs text-gray-400">
-              Request Date: {quotation.createdAt?.slice(0, 10)}
-            </p>
-          </div>
-        </div>
-      </header>
+      <DetailHeader
+        backHref="/quotations"
+        title={quotation.id?.slice(0, 8)}
+        titleExtra={quotation.status && <Badge kind="status" value={quotation.status} />}
+        subtitle={`Request Date: ${quotation.createdAt?.slice(0, 10) ?? "—"}`}
+      />
 
       <div className="flex flex-col sm:flex-row justify-between gap-4 p-4">
         <div className="w-full flex flex-col gap-4">
