@@ -63,7 +63,6 @@ const getQuotationsColumns = ({ onView, onEdit, onDelete }: ColumnActions): Colu
     title: "PRODUCT TYPE",
     dataIndex: ["productDetail", "name"],
     key: "productType",
-    // align: "center",
     render: (value: string) => (
       <Badge 
         kind="productType" 
@@ -117,23 +116,21 @@ const getQuotationsColumns = ({ onView, onEdit, onDelete }: ColumnActions): Colu
     key: "status",
     // align: "center",
     render: (value: string) => (
-        // <div className="flex justify-center">
       <Badge 
         kind="status" 
         value={value ?? "Unknown"} 
       />
-    //   </div>
     ),
   },
   {
     title: "ACTIONS",
     key: "actions",
     align: "center",
-    render: (_, f) => (
+    render: (_, q) => (
       <div className="flex items-center justify-center gap-1">
         <Button
           type="text"
-          onClick={() => onView(f)}
+          onClick={() => onView(q)}
           icon={<Eye size={15} className="text-blue-500!" />}
           title="View"
         />
