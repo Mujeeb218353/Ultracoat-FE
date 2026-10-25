@@ -1,7 +1,7 @@
 import Badge from "@/components/Badge";
 import { Button, TableProps } from "antd";
 import dayjs from "dayjs";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Eye } from "lucide-react";
 import { Quotation } from "../types/quotations.types";
 
 type ColumnsType<T> = NonNullable<TableProps<T>["columns"]>;
@@ -12,7 +12,7 @@ interface ColumnActions {
   onDelete: (q: Quotation) => void;
 };
 
-const getQuotationsColumns = ({ onView, onEdit, onDelete }: ColumnActions): ColumnsType<Quotation> => [
+const getQuotationsColumns = ({ onView }: ColumnActions): ColumnsType<Quotation> => [
   {
     title: "",
     dataIndex: "id",
@@ -114,7 +114,6 @@ const getQuotationsColumns = ({ onView, onEdit, onDelete }: ColumnActions): Colu
     title: "STATUS",
     dataIndex: "status",
     key: "status",
-    // align: "center",
     render: (value: string) => (
       <Badge 
         kind="status" 
@@ -134,18 +133,6 @@ const getQuotationsColumns = ({ onView, onEdit, onDelete }: ColumnActions): Colu
           icon={<Eye size={15} className="text-blue-500!" />}
           title="View"
         />
-        {/* <Button
-          type="text"
-          onClick={() => onEdit(f)}
-          icon={<Pencil size={15} className="text-gray-500!" />}
-          title="Edit"
-        />
-        <Button
-          type="text"
-          onClick={() => onDelete(f)}
-          icon={<Trash2 size={15} className="text-red-500!" />}
-          title="Delete"
-        /> */}
       </div>
     ),
   },
