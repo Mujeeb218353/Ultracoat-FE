@@ -2,7 +2,7 @@ import QuotationsWithFollowUpsTable from "@/features/follow-ups/components/Quota
 
 const FollowUpsWithQuotationsPage = () => {
   return (
-    <div>
+    <div className="p-5">
       <QuotationsWithFollowUpsTable />
     </div>
   );

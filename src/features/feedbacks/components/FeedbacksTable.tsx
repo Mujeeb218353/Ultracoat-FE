@@ -9,6 +9,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import useFeedbacks from "../hooks/use-feedbacks";
 import { Feedback, FeedbackStatus } from "../types/feedback.types";
+import FeedbackKpiCards from "./FeedbackKpiCards";
 import getFeedbacksColumns from "./feedbacks.columns";
 
 const STATUS_OPTIONS = [
@@ -40,15 +41,15 @@ const FeedbacksTable = () => {
     <Space className="w-full flex! flex-col! items-start! justify-between! gap-2! sm:flex-row! sm:items-center!">
       <span className="font-semibold text-lg">Feedbacks</span>
       <Space size="small" className="flex! flex-wrap! gap-2!">
-        <Tag color="blue">Total: {data?.counts.total ?? data?.total ?? 0}</Tag>
         <Tag color="orange">Pending: {data?.counts.pending ?? 0}</Tag>
         <Tag color="green">Submitted: {data?.counts.submitted ?? 0}</Tag>
-        <Tag color="purple">Average: {data?.statistics.averageRating?.toFixed(1) ?? "0.0"} / 5</Tag>
       </Space>
     </Space>
   );
 
   return (
+    <div className="flex flex-col gap-4 p-5">
+      <FeedbackKpiCards statistics={data?.statistics} total={data?.counts.total ?? data?.total} loading={isLoading} />
     <Card title={cardTitle}>
       <div className="mb-2 flex flex-col items-center gap-3 sm:mb-0 sm:flex-row sm:p-4">
         <Input
@@ -94,6 +95,7 @@ const FeedbacksTable = () => {
         rowKey="id"
       />
     </Card>
+    </div>
   );
 };
 

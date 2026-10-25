@@ -10,7 +10,7 @@ const FollowUpsLayout = ({ children }: ProfileLayoutProps) => {
   return (
     <div className="flex-1 flex flex-col">
       <PageHeader />
-      <div className="flex-1 p-5">
+      <div className="flex-1">
         {children}
       </div>
     </div>

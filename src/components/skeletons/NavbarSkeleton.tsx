@@ -7,7 +7,7 @@ const NavbarSkeleton = ({
 }) => {
   return (
     <header
-      className="h-18! px-4! flex! justify-between! items-center! fixed! top-0! z-100! overflow-hidden! bg-white! dark:bg-slate-900! border-b! border-gray-200! dark:border-slate-700! shadow-sm! dark:shadow-slate-950/40!"
+      className="h-18! px-4! flex! justify-between! items-center! fixed! top-0! z-100! overflow-hidden! bg-white! dark:bg-[#222222]! border-b! border-gray-200! dark:border-white/10! shadow-sm! dark:shadow-slate-950/40!"
       style={{
         width: isMobile ? "100%" : collapsed ? "calc(100% - 4rem)" : "calc(100% - 15rem)",
         right: 0,

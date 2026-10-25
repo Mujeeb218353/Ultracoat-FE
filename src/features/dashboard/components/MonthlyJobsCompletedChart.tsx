@@ -35,6 +35,7 @@ const MonthlyJobsCompletedChart = () => {
           <Line
             type="monotone"
             dataKey="count"
+            name="Total"
             stroke="#007A33"
             strokeWidth={2.5}
             dot={{ r: 4, fill: "#007A33" }}

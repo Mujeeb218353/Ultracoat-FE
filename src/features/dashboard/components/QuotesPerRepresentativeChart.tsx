@@ -30,7 +30,7 @@ const QuotesPerRepresentativeChart = () => {
             itemStyle={{ color: isDark ? "#f3f4f6" : "#111827" }}
             cursor={false}
           />
-          <Bar dataKey="count" fill="#001259" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="count" name="Total" fill="#001259" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </Card>

@@ -28,7 +28,7 @@ const CustomerRatingsDistributionChart = () => {
         ...item,
         stars,
         label: stars === 0 ? "Unrated" : `${stars} Star${stars > 1 ? "s" : ""}`,
-        count: item.count ?? 0,
+        total: item.count ?? 0,
         percent: item.percent ?? 0,
         fill: COLORS[stars] ?? "#94A3B8",
       };
@@ -77,8 +77,8 @@ const CustomerRatingsDistributionChart = () => {
             labelStyle={{ color: isDark ? "#f3f4f6" : "#111827" }}
             itemStyle={{ color: isDark ? "#f3f4f6" : "#111827" }}
             formatter={(_, _name, entry) => {
-              const payload = entry?.payload as { percent: number; count: number, stars: number, label?: string } | undefined;
-              return [`${payload?.count ?? 0} review${(payload?.count ?? 0) > 1 ? 's' : ''} (${payload?.percent ?? 0}%)`, payload?.label ?? ""];
+              const payload = entry?.payload as { percent: number; total: number, stars: number, label?: string } | undefined;
+              return [`${payload?.total ?? 0} review${(payload?.total ?? 0) > 1 ? 's' : ''} (${payload?.percent ?? 0}%)`, payload?.label ?? ""];
             }}
             cursor={false}
           />

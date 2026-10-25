@@ -20,7 +20,7 @@ const CustomerRatingsBarChart = () => {
 
   const chartData = customerRatingsDistribution ? customerRatingsDistribution.map((item) => ({
     label: `${item.stars} Star${item.stars > 1 ? "s" : ""}`,
-    count: item.count ?? 0,
+    total: item.count ?? 0,
     percent: item.percent ?? 0,
     fill: COLORS[item.stars] ?? "#d1d5db",
   })).sort((a, b) => {
@@ -62,12 +62,12 @@ const CustomerRatingsBarChart = () => {
             labelStyle={{ color: isDark ? "#f3f4f6" : "#111827" }}
             itemStyle={{ color: isDark ? "#f3f4f6" : "#111827" }}
             formatter={(value, _name, entry) => {
-              const payload = entry?.payload as { percent?: number; label?: string } | undefined;
+              const payload = entry?.payload as { percent?: number; total?: number; label?: string } | undefined;
               return [`${value} reviews (${payload?.percent ?? 0}%)`, payload?.label ?? ""];
             }}
             cursor={{ fill: isDark ? "rgba(255,255,255,0.05)" : "#f5f5f5" }}
           />
-          <Bar dataKey="count" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="total" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </Card>

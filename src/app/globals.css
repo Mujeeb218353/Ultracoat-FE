@@ -15,7 +15,7 @@
 }
 
 .dark {
-  --background: #fff1eb;
+  --background: #222222;
   --foreground: #e4e4e7;
 }
 
@@ -47,4 +47,16 @@ body {
 
 .ant-otp-input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.dark [class*="css-var-"] {
+  --ant-color-bg-container: #222222 !important;
+  --ant-color-bg-layout: #222222 !important;
+  --ant-color-bg-elevated: #222222 !important;
+  --ant-color-text: #f3f4f6 !important;
+  --ant-color-text-heading: #f3f4f6 !important;
+  --ant-color-border: #374151 !important;
+  --ant-color-border-secondary: #1f2937 !important;
+  --ant-layout-header-bg: #222222 !important;
+  --ant-layout-body-bg: #222222 !important;
 }

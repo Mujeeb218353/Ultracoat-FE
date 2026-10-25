@@ -31,7 +31,7 @@ const StatCardsGrid = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map(({ label, value, icon: Icon }) => (
         <StatCard key={label} icon={<Icon size={20} />} value={value} label={label} />
       ))}

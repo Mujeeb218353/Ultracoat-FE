@@ -9,12 +9,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const mode = useThemeMode();
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (mode === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
+    document.documentElement.classList.toggle("dark", mode === "dark");
   }, [mode]);
 
   return <ConfigProvider theme={getAntdTheme(mode)}>{children}</ConfigProvider>;

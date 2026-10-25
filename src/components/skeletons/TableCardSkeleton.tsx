@@ -9,7 +9,7 @@ interface TableCardSkeletonProps {
 }
 
 const TableCardSkeleton = ({ columns = 5, rows = 8 }: TableCardSkeletonProps) => (
-  <Card
+  <Card className="dark:bg-[#222222]"
     title={
       <div className="flex flex-col sm:flex-row items-center justify-between gap-2 my-4 sm:my-0">
         <Skeleton.Input active size="small" style={{ width: 120 }} />

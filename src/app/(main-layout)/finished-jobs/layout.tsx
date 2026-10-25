@@ -14,7 +14,7 @@ const FinishedJobsLayout = ({ children }: FinishedJobsLayoutProps) => {
   return (
     <div className="flex-1 flex flex-col">
       {isListPage && <PageHeader />}
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 p-5">{children}</div>
     </div>
   );
 };

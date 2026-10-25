@@ -1,6 +1,9 @@
 import { create } from "zustand";
+import Cookies from "js-cookie";
 
 export type ThemeMode = "light" | "dark";
+
+export const THEME_COOKIE = "theme";
 
 interface ThemeState {
   mode: ThemeMode;
@@ -8,14 +11,13 @@ interface ThemeState {
   setTheme: (mode: ThemeMode) => void;
 }
 
-function readStoredTheme(): ThemeMode {
+export function readStoredTheme(): ThemeMode {
   if (typeof window === "undefined") return "light";
-  const stored = localStorage.getItem("theme");
-  return stored === "dark" ? "dark" : "light";
+  return Cookies.get(THEME_COOKIE) === "dark" ? "dark" : "light";
 }
 
 function writeStoredTheme(mode: ThemeMode) {
-  localStorage.setItem("theme", mode);
+  Cookies.set(THEME_COOKIE, mode, { expires: 365, sameSite: "lax", path: "/" });
 }
 
 const useThemeStore = create<ThemeState>((set) => ({
