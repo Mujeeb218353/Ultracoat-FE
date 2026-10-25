@@ -152,12 +152,20 @@ const FeedbackDetail = () => {
             headerClassName="bg-[#001529] rounded-t-lg text-white"
           >
             <div className="flex flex-col gap-4">
-              <Field label="Created By" value={feedback.creator?.name} />
-              <Field label="Last Updated By" value={feedback.updater?.name} />
-              <Field
-                label="Last Updated"
-                value={feedback.updatedAt ? dayjs(feedback.updatedAt).format("DD MMM YYYY, hh:mm A") : "-"}
-              />
+              {[
+                { title: "Created By", person: feedback.creator },
+                { title: "Updated By", person: feedback.updater },
+              ].map(({ title, person }) => (
+                <div key={title} className="flex flex-col gap-3 not-last:border-b not-last:border-gray-200 not-last:pb-4 dark:not-last:border-white/10">
+                  <Field label={title} value={person?.name} />
+                  <div className="flex flex-col gap-3">
+                    <Field label="Role" value={person?.role} />
+                    <Field label="Phone" value={person?.phone} />
+                    <Field label="Email" value={person?.email} />
+                    <Field label="Location" value={person?.location} />
+                  </div>
+                </div>
+              ))}
             </div>
           </SectionCard>
         </div>

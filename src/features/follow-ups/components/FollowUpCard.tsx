@@ -72,14 +72,6 @@ const FollowUpsCard = ({ quotationId, followUps }: Props) => {
                   </div>
                 )}
 
-                <div className="flex flex-col gap-0.5 text-[10px] text-gray-400">
-                  <span>
-                    Created by {f.creator?.name ?? "—"} · {dayjs(f.createdAt).format("DD MMM YYYY, hh:mm A")}
-                  </span>
-                  {f.updater?.id !== f.creator?.id && (
-                    <span>Updated by {f.updater?.name ?? "—"}</span>
-                  )}
-                </div>
               </div>
             );
           })}
