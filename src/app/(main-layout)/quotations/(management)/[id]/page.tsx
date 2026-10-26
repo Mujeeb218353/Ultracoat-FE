@@ -1,15 +1,15 @@
 "use client";
 
-import DetailHeader from "@/components/DetailHeader";
-import { useParams } from "next/navigation";
-import { Building2, Box, Tag, Phone, Mail, UserCheck, Calendar } from "lucide-react";
-import { Skeleton } from "antd";
-import SectionCard from "@/features/quotations/components/SectionCard";
-import QuotationActionsCard from "@/features/quotations/components/QuotationActionsCard";
-import useQuotationById from "@/features/quotations/hooks/use-quotation-by-id";
 import Badge from "@/components/Badge";
-import dayjs from "dayjs";
+import DetailHeader from "@/components/DetailHeader";
 import Field from "@/components/Field";
+import QuotationActionsCard from "@/features/quotations/components/QuotationActionsCard";
+import SectionCard from "@/features/quotations/components/SectionCard";
+import useQuotationById from "@/features/quotations/hooks/use-quotation-by-id";
+import { Skeleton } from "antd";
+import dayjs from "dayjs";
+import { Box, Building2, Tag } from "lucide-react";
+import { useParams } from "next/navigation";
 
 const QuotationDetailPage = () => {
   const { id } = useParams<{ id: string }>();
