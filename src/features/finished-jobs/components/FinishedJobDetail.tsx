@@ -16,10 +16,12 @@ const FinishedJobDetail = () => {
   const download = useDownloadQuotationFile(id, job?.feedback?.quotation?.file ?? "quotation.pdf");
 
   if (isPending) return <Skeleton active className="p-6" />;
-  if (!job) return <div className="flex flex-col gap-4">
-        <DetailHeader backHref="/finished-jobs" title="Finished Job" />
-        <div className="p-6 text-sm text-gray-500">Finished job not found.</div>
-      </div>;
+  if (!job) return (
+    <div className="flex flex-col gap-4">
+      <DetailHeader backHref="/finished-jobs" title="Finished Job" />
+      <div className="p-6 text-sm text-gray-500">Finished job not found.</div>
+    </div>
+  );
 
   const feedback = job.feedback;
   const quotation = feedback?.quotation;
