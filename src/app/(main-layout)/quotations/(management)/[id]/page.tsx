@@ -30,7 +30,7 @@ const QuotationDetailPage = () => {
     <div className="flex flex-col gap-4">
       <DetailHeader
         backHref="/quotations"
-        title={quotation.id?.slice(0, 8)}
+        title={"Quotation"}
         titleExtra={quotation.status && <Badge kind="status" value={quotation.status} />}
         subtitle={`Request Date: ${quotation.createdAt?.slice(0, 10) ?? "—"}`}
       />
