@@ -10,12 +10,15 @@ import useUpdateQuotationStatus from "../hooks/use-update-quotation-status";
 import useDownloadQuotationFile from "../hooks/use-download-quotation-file";
 import { Quotation } from "../types/quotations.types";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/features/auth/selectors/auth.selector";
 
 interface Props {
   quotation: Quotation;
 }
 
 const QuotationActionsCard = ({ quotation }: Props) => {
+  const user = useUser();
+  const isCreator = user?.id === quotation?.creator?.id;
   const router = useRouter();
   const id = quotation.id ?? "";
   const status = quotation.status;
@@ -116,7 +119,7 @@ const QuotationActionsCard = ({ quotation }: Props) => {
           </Button>
         )}
 
-        {status === "QUOTED" && (
+        {status === "QUOTED" && isCreator && (
           <Button 
             type="primary" 
             icon={<Send size={14} />} 
@@ -132,7 +135,7 @@ const QuotationActionsCard = ({ quotation }: Props) => {
           </Button>
         )}
 
-        {status === "SENT TO CUSTOMER" && (
+        {status === "SENT TO CUSTOMER" && isCreator && (
           <div className="flex flex-col gap-2">
             <Button 
               type="primary" 
