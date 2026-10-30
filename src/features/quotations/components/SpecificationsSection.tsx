@@ -34,7 +34,7 @@ const SpecificationsSection = ({ productName }: Props) => {
           <Form.Item key={f.key} label={f.label} className="mb-0">
             <div className="flex gap-2">
               <Form.Item name={["specs", f.key]} noStyle rules={f.required ? [{ required: true, message: `${f.label} is required` }] : undefined}>
-                <Select className="min-w-0 flex-1" loading={isLabel && f.key === "size" && isFetching} placeholder={`Select ${f.label.toLowerCase()}`} options={getOptions(f.key)} onChange={() => form.setFieldValue(["specs", `${f.key}Other`], undefined)} />
+                <Select className="min-w-0 flex-1" showSearch={{ optionFilterProp: "label" }} loading={isLabel && f.key === "size" && isFetching} placeholder={`Select ${f.label.toLowerCase()}`} options={getOptions(f.key)} onChange={() => form.setFieldValue(["specs", `${f.key}Other`], undefined)} />
               </Form.Item>
 
               {shouldShowInput(f.key) && (

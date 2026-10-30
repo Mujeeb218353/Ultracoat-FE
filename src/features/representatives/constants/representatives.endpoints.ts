@@ -6,7 +6,7 @@ const baseUrl = "/sales-representatives";
 const representativesEndpoints = {
   createRepresentative: () => baseUrl,
   getRepresentatives: (query: Filters) => `${baseUrl}${buildQuery(query)}`,
-  getRepresentativesList: () => `${baseUrl}/list`,
+  getRepresentativesList: (query: Filters = {}) => `${baseUrl}/list${buildQuery(query)}`,
   getRepresentativeById: (id: string) => `${baseUrl}/${id}`,
   updateRepresentative: (id: string) => `${baseUrl}/${id}`,
   updateRepresentativeEmail: (id: string) => `${baseUrl}/email/${id}`,

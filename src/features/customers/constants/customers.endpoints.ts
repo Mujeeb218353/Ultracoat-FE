@@ -6,7 +6,7 @@ const baseUrl = "/customers";
 const customersEndpoints = {
   createCustomer: () => baseUrl,
   getCustomers: (query: Filters) => `${baseUrl}${buildQuery(query)}`,
-  getCustomersList: () => `${baseUrl}/list`,
+  getCustomersList: (query: Filters = {}) => `${baseUrl}/list${buildQuery(query)}`,
   getCustomerById: (id: string) => `${baseUrl}/${id}`,
   updateCustomer: (id: string) => `${baseUrl}/${id}`,
   deleteCustomer: (id: string) => `${baseUrl}/${id}`,

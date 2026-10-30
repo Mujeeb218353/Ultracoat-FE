@@ -9,7 +9,7 @@ import {
 const representativesApi = {
   createRepresentative: (payload: Representative) => api.post<ApiResponse<Representative>>(representativesEndpoints.createRepresentative(), payload).then((res) => res.data.data),
   getRepresentatives: (query: Filters) => api.get<ApiResponse<RepresentativesResponse>>(representativesEndpoints.getRepresentatives(query)).then((res) => res.data.data),
-  getRepresentativesList: () => api.get<ApiResponse<Representative[]>>(representativesEndpoints.getRepresentativesList()).then((res) => res.data.data),
+  getRepresentativesList: (query: Filters = {}) => api.get<ApiResponse<RepresentativesResponse>>(representativesEndpoints.getRepresentativesList(query)).then((res) => res.data.data),
   getRepresentativeById: (id: string) => api.get<ApiResponse<Representative>>(representativesEndpoints.getRepresentativeById(id)).then((res) => res.data.data),
   updateRepresentative: (id: string, payload: Representative) => api.put<ApiResponse<Representative>>(representativesEndpoints.updateRepresentative(id), payload).then((res) => res.data.data),
   updateRepresentativeEmail: (id: string, payload: Representative) => api.put<ApiResponse<Representative>>(representativesEndpoints.updateRepresentativeEmail(id), payload).then((res) => res.data.data),

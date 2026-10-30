@@ -3,6 +3,7 @@ import { Filters } from "@/utils/types";
 const customersQueryKeys = {
   customers: (query: Filters) => ["customers", query],
   customersList: () => ["customers", "list"],
+  customersOptions: () => ["customers", "options"],
   customer: (id: string) => ["customers", id],
 } as const;
 
