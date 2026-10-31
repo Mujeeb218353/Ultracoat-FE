@@ -3,7 +3,8 @@
 import FormField from "@/components/FormField";
 import Modal from "@/components/Modal";
 import { useActiveModal, useCloseModal } from "@/features/modal/selectors/modal.selector";
-import useProductsList from "@/features/products/hooks/use-products-list";
+import PaginatedSelect from "@/components/PaginatedSelect";
+import { useProductsOptions, getProductOption } from "@/features/products/hooks/use-products-list";
 import { Button, Card, Form, Input, Select } from "antd";
 import {
   Box,
@@ -25,12 +26,10 @@ const iconCls = "w-4 h-4 text-gray-400";
 const CreateFeatureModal = () => {
   const activeModal = useActiveModal();
   const closeModal = useCloseModal();
-  const { data: products, refetch: fetchProducts } = useProductsList({ enabled: false });
   const { mutate: createFeature, isPending } = useCreateFeature();
   const [form] = Form.useForm();
   const optionGroups = Form.useWatch("optionGroups", form);
 
-  const productOptions = Array.isArray(products) ? products.map((p) => ({ label: p.name, value: p.id })) : [];
 
   const getDependencyOptions = (groupIndex: number) => (optionGroups ?? []).slice(0, groupIndex).flatMap((g: OptionFeatureGroup) => (g?.values ?? []).filter((v: OptionFeatureValue) => v?.value).map((v: OptionFeatureValue) => ({ label: `${g.label || "Group"} → ${v.label || v.value}`, value: v.value })));
 
@@ -87,16 +86,12 @@ const CreateFeatureModal = () => {
          name="productId"
          rules={[{ required: true, message: "Product type is required" }]}
         >
-          <Select
+          <PaginatedSelect
             allowClear
             placeholder="None"
             suffixIcon={<Box className={iconCls} />}
-            options={productOptions}
-            onOpenChange={(open) => {
-              if (open && !products) {
-                fetchProducts();
-              }
-            }}
+            useOptions={useProductsOptions}
+            getOption={getProductOption}
           />
        </Form.Item>
 
@@ -130,6 +125,7 @@ const CreateFeatureModal = () => {
                       allowClear
                       placeholder="None"
                       suffixIcon={<GitBranch className={iconCls} />}
+                      showSearch={{ optionFilterProp: "label" }}
                       options={getDependencyOptions(gName)}
                     />
                   </Form.Item>

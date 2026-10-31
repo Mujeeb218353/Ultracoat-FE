@@ -2,7 +2,8 @@
 
 import FormField from "@/components/FormField";
 import { useCloseModal } from "@/features/modal/selectors/modal.selector";
-import useProductsList from "@/features/products/hooks/use-products-list";
+import PaginatedSelect from "@/components/PaginatedSelect";
+import { useProductsOptions, getProductOption } from "@/features/products/hooks/use-products-list";
 import { Button, Card, Form, Input, Select } from "antd";
 import { GitBranch, Hash, Layers, ListChecks, Plus, Tag, Trash2, Type } from "lucide-react";
 import { useMemo } from "react";
@@ -27,7 +28,6 @@ const UpdateFeatureForm = ({ feature }: UpdateFeatureFormProps) => {
   const [form] = Form.useForm<UpdateFeaturePayloadRequest>();
   const closeModal = useCloseModal();
   const { mutate: updateFeature, isPending } = useUpdateFeature();
-  const { data: products, refetch: fetchProducts } = useProductsList({ enabled: false });
 
   const initialValues = useMemo<FeatureFormValues>(() => {
     const idToValue: Record<string, string> = {};
@@ -53,14 +53,8 @@ const UpdateFeatureForm = ({ feature }: UpdateFeatureFormProps) => {
   const watched = Form.useWatch("optionGroups", form);
   const optionGroups: OptionFeatureGroup[] = watched ?? initialValues.optionGroups;
 
-  const productOptions = useMemo(() => {
-    const list = Array.isArray(products) ? products.map((p) => ({ label: p.name, value: p.id })) : [];
-    const current = feature.productDetail;
-    if (current?.id && !list.some((o) => o.value === current.id)) {
-      list.unshift({ label: current.name, value: current.id });
-    }
-    return list;
-  }, [products, feature.productDetail]);
+  const currentProduct = feature.productDetail;
+  const selectedProduct = useMemo(() => (currentProduct?.id ? { value: currentProduct.id, label: currentProduct.name ?? "" } : null), [currentProduct]);
 
   const getDependencyOptions = (groupIndex: number) => (optionGroups ?? []).slice(0, groupIndex).flatMap((g: OptionFeatureGroup) => (g?.values ?? []).filter((v: OptionFeatureValue) => v?.value).map((v: OptionFeatureValue) => ({
       label: `${g.label || "Group"} → ${v.label || v.value}`,
@@ -111,14 +105,13 @@ const UpdateFeatureForm = ({ feature }: UpdateFeatureFormProps) => {
         name="productId"
         rules={[{ required: true, message: "Product type is required" }]}
       >
-        <Select
+        <PaginatedSelect
           allowClear
           placeholder="None"
           suffixIcon={<ListChecks className={iconCls} />}
-          options={productOptions}
-          onOpenChange={(open) => {
-            if (open && !products) fetchProducts();
-          }}
+          useOptions={useProductsOptions}
+          getOption={getProductOption}
+          selectedOption={selectedProduct}
         />
       </Form.Item>
 
@@ -153,6 +146,7 @@ const UpdateFeatureForm = ({ feature }: UpdateFeatureFormProps) => {
                     allowClear
                     placeholder="None"
                     suffixIcon={<GitBranch className={iconCls} />}
+                    showSearch={{ optionFilterProp: "label" }}
                     options={getDependencyOptions(gName)}
                   />
                 </Form.Item>

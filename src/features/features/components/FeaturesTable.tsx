@@ -2,7 +2,8 @@
 
 import DataTable from "@/components/Table";
 import { useOpenModal } from "@/features/modal/selectors/modal.selector";
-import useProductsList from "@/features/products/hooks/use-products-list";
+import PaginatedDropdown from "@/components/PaginatedDropdown";
+import { useProductsOptions, getProductOption } from "@/features/products/hooks/use-products-list";
 import useDebounce from "@/hooks/use-debounce";
 import { Button, Card, Dropdown, Input, Space, Tag } from "antd";
 import { Filter, Search } from "lucide-react";
@@ -21,10 +22,8 @@ const STATUS_OPTIONS = [
 
 const FeaturesTable = () => {
   const openModal = useOpenModal();
-  const { data: products, refetch: fetchProducts } = useProductsList({ enabled: false });
   const { mutate: updateFeatureStatus } = useUpdateFeatureStatus();
 
-  const productOptions = useMemo(() => (Array.isArray(products) ? products.map((p) => ({ label: p.name, key: p.id })) : []), [products]);
 
   const [filters, setFilters] = useState<Filters>({
     search: "",
@@ -79,7 +78,6 @@ const FeaturesTable = () => {
 
   const currentStatusLabel = filters.isActive === null ? "Filter" : STATUS_OPTIONS.find((o) => o.key === String(filters.isActive))?.label ?? "Filter";
 
-  const currentProductLabel = filters.productId ? productOptions.find((o) => o.key === filters.productId)?.label ?? "Filter By Product" : "Filter By Product";
 
   const cardTitle = (
     <Space
@@ -119,20 +117,15 @@ const FeaturesTable = () => {
           <Button icon={<Filter size={14} />}>{currentStatusLabel}</Button>
         </Dropdown>
 
-        <Dropdown
-          trigger={["hover"]}
-          onOpenChange={(open) => {
-            if (open && !productOptions.length) fetchProducts();
-          }}
-          menu={{
-            items: [{ key: "", label: "All" }, ...productOptions],
-            selectable: true,
-            selectedKeys: [filters.productId ?? ""],
-            onClick: ({ key }) => handleProductChange(key),
-          }}
-        >
-          <Button icon={<Filter size={14} />}>{currentProductLabel}</Button>
-        </Dropdown>
+        <PaginatedDropdown
+          useOptions={useProductsOptions}
+          getOption={getProductOption}
+          value={filters.productId}
+          onChange={handleProductChange}
+          placeholder="Filter By Product"
+          icon={<Filter size={14} />}
+          searchPlaceholder="Search products..."
+        />
       </div>
 
       <DataTable<Feature>
