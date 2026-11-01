@@ -37,7 +37,7 @@ const LeadTimeFreightSection = () => (
         rules={[{ required: true, message: "Lead time is required" }]}
         className="mb-0"
       >
-        <Select className="w-full" placeholder="Select lead time" options={LEAD_TIME_OPTIONS} />
+        <Select className="w-full" showSearch={{ optionFilterProp: "label" }} placeholder="Select lead time" options={LEAD_TIME_OPTIONS} />
       </Form.Item>
 
       <Form.Item

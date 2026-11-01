@@ -20,11 +20,10 @@ import useCreateQuotation from "@/features/quotations/hooks/use-create-quotation
 import Modal from "@/components/Modal";
 import { useOpenModal, useCloseModal, useActiveModal } from "@/features/modal/selectors/modal.selector";
 import QuotationPreviewContent from "@/features/quotations/components/QuotationPreviewModal";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import buildPreviewQuotation from "@/features/quotations/utils/build.preview.quotation";
-import useCustomersList from "@/features/customers/hooks/use-customer-list";
 import useFeaturesList from "@/features/features/hooks/use-features-list";
-import { CustomersResponse } from "@/features/customers/types/customers.types";
+import { Customer } from "@/features/customers/types/customers.types";
 import { Feature } from "@/features/features/types/features.types";
 
 const CreateQuotationPage = () => {
@@ -43,14 +42,11 @@ const CreateQuotationPage = () => {
   const { data: products } = useProductsList();
   const selectedProduct = Array.isArray(products) ? products.find((p) => p.id === productId) : undefined;
 
-  const customerId = Form.useWatch("customerId", form);
-  const { data: customersData } = useCustomersList({ enabled: false });
-  const rawCustomersData = customersData as CustomersResponse | undefined;
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
 
   const { data: featuresData } = useFeaturesList({ enabled: !!productId });
   const rawFeaturesData = featuresData as { features: Feature[] } | undefined;
 
-  const selectedCustomer = rawCustomersData?.customers.find((c) => c.id === customerId);
   const features = useMemo(() => rawFeaturesData?.features ?? [], [rawFeaturesData]);
 
   const handleValuesChange = (changed: Partial<QuotationFormState>) => {
@@ -113,7 +109,7 @@ const CreateQuotationPage = () => {
           rules={[{ required: true, message: "Select a customer" }]}
           className="mb-0"
         >
-          <CustomerSection />
+          <CustomerSection onCustomerChange={setSelectedCustomer} />
         </Form.Item>
 
         <Form.Item

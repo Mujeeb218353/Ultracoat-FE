@@ -29,4 +29,6 @@ export type Filters<S = Status> = {
   isActive?: boolean | null;
   productId?: string | null;
   quotationId?: string | null;
+  customerId?: string | null;
+  salesRepresentativeId?: string | null;
 };

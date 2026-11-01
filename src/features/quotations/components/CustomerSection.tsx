@@ -1,27 +1,20 @@
 "use client";
 
 import { Building2, User } from "lucide-react";
-import { Select } from "antd";
+import PaginatedSelect from "@/components/PaginatedSelect";
+import { useState } from "react";
 import SectionCard from "./SectionCard";
-import useCustomersList from "@/features/customers/hooks/use-customer-list";
-import { CustomersResponse } from "@/features/customers/types/customers.types";
+import useCustomersOptions, { getCustomerOption } from "@/features/customers/hooks/use-customer-list";
+import { Customer } from "@/features/customers/types/customers.types";
 
 interface Props {
   value?: string;
   onChange?: (id: string) => void;
+  onCustomerChange?: (customer?: Customer) => void;
 }
 
-const CustomerSection = ({ value, onChange }: Props) => {
-  const { data, isFetching, refetch: fetchCustomers } = useCustomersList({ enabled: false });
-  const rawData = data as CustomersResponse | undefined;
-  const customers = rawData?.customers?? [];
-
-  const options = customers.map((c) => ({
-    value: c.id as string,
-    label: c.name as string,
-  }));
-
-  const selectedCustomer = customers.find((c) => c.id === value);
+const CustomerSection = ({ value, onChange, onCustomerChange }: Props) => {
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
 
   return (
     <SectionCard icon={Building2} title="Customer">
@@ -32,21 +25,21 @@ const CustomerSection = ({ value, onChange }: Props) => {
 
         <div className="flex flex-col justify-between items-center sm:flex-row gap-4">
           <div className="w-full sm:w-72">
-            <Select
+            <PaginatedSelect
               className="w-full h-10"
-              showSearch={{ optionFilterProp: "label" }}
-              loading={isFetching}
-              onOpenChange={(open) => {
-                if (open && !data) fetchCustomers();
-              }}
               placeholder="— Select a customer —"
               value={value}
-              onChange={onChange}
-              options={options}
+              useOptions={useCustomersOptions}
+              getOption={getCustomerOption}
+              onChange={(id, customer) => {
+                setSelectedCustomer(customer);
+                onCustomerChange?.(customer);
+                onChange?.(id);
+              }}
             />
           </div>
 
-          {selectedCustomer && (
+          {value && selectedCustomer && (
             <div className="flex items-start gap-3 rounded-lg border border-gray-300 bg-slate-200 dark:bg-slate-900/50 dark:border-white/5 p-3 min-w-[320px]">
               <div className="mt-0.5 rounded p-1 text-gray-400 dark:bg-gray-800">
                 <User size={13} />

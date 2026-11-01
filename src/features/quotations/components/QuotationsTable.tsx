@@ -1,7 +1,10 @@
 "use client";
 
 import DataTable from "@/components/Table";
-import useProductsList from "@/features/products/hooks/use-products-list";
+import PaginatedDropdown from "@/components/PaginatedDropdown";
+import { useProductsOptions, getProductOption } from "@/features/products/hooks/use-products-list";
+import useRepresentativesOptions, { getRepresentativeOption } from "@/features/representatives/hooks/use-representatives-list";
+import useCustomersOptions, { getCustomerOption } from "@/features/customers/hooks/use-customer-list";
 import useDebounce from "@/hooks/use-debounce";
 import { Button, Card, Dropdown, Input, Space, Tag } from "antd";
 import { Filter, Search } from "lucide-react";
@@ -26,13 +29,12 @@ const STATUS_OPTIONS = [
 const QuotationsTable = () => {
   const openModal = useOpenModal();
   const router = useRouter();
-  const { data: products, refetch: fetchProducts } = useProductsList({ enabled: false });
-  const productOptions = useMemo(() => (Array.isArray(products) ? products.map((p) => ({ label: p.name, key: p.id })) : []), [products]);
-
   const [filters, setFilters] = useState<Filters>({
     search: "",
     status: null,
     productId: null,
+    customerId: null,
+    salesRepresentativeId: null,
   });
   const [pagination, setPagination] = useState({ skip: 0, limit: 10 });
 
@@ -44,6 +46,8 @@ const QuotationsTable = () => {
     search,
     status: filters.status,
     productId: filters.productId ?? undefined,
+    customerId: filters.customerId ?? undefined,
+    salesRepresentativeId: filters.salesRepresentativeId ?? undefined,
   });
 
   const columns = useMemo(() => getQuotationsColumns({
@@ -75,6 +79,16 @@ const QuotationsTable = () => {
     resetPage();
   };
 
+  const handleCustomerChange = (key: string) => {
+    setFilters((prev) => ({ ...prev, customerId: key === "" ? null : key }));
+    resetPage();
+  };
+
+  const handleSalesRepresentativeChange = (key: string) => {
+    setFilters((prev) => ({ ...prev, salesRepresentativeId: key === "" ? null : key }));
+    resetPage();
+  };
+
   const cardTitle = (
     <Space
       size="small"
@@ -93,8 +107,6 @@ const QuotationsTable = () => {
     </Space>
   );
 
-  const currentProductLabel = filters.productId ? productOptions.find((o) => o.key === filters.productId)?.label ?? "Filter By Product" : "Filter By Product";
-
   return (
       <Card title={cardTitle}>
         <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-3 sm:p-4 mb-2 sm:mb-0">
@@ -107,21 +119,36 @@ const QuotationsTable = () => {
             className="flex-1 min-w-52"
           />
 
-          <Dropdown
-            trigger={["hover"]}
-            onOpenChange={(open) => {
-              if (open && !productOptions.length) fetchProducts();
-            }}
-            menu={{
-              items: [{ key: "", label: "All" }, ...productOptions],
-              selectable: true,
-              selectedKeys: [filters.productId ?? ""],
-              onClick: ({ key }) => handleProductChange(key),
-            }}
-          >
-            <Button icon={<Filter size={14} />}>{currentProductLabel}</Button>
-          </Dropdown>
-  
+          <PaginatedDropdown
+            useOptions={useProductsOptions}
+            getOption={getProductOption}
+            value={filters.productId}
+            onChange={handleProductChange}
+            placeholder="Filter By Product"
+            icon={<Filter size={14} />}
+            searchPlaceholder="Search products..."
+          />
+
+          <PaginatedDropdown
+            useOptions={useCustomersOptions}
+            getOption={getCustomerOption}
+            value={filters.customerId}
+            onChange={handleCustomerChange}
+            placeholder="Filter By Customer"
+            icon={<Filter size={14} />}
+            searchPlaceholder="Search customers..."
+          />
+
+          <PaginatedDropdown
+            useOptions={useRepresentativesOptions}
+            getOption={getRepresentativeOption}
+            value={filters.salesRepresentativeId}
+            onChange={handleSalesRepresentativeChange}
+            placeholder="Filter By Sales Representative"
+            icon={<Filter size={14} />}
+            searchPlaceholder="Search representatives..."
+          />
+
           <Dropdown
             trigger={["hover"]}
             menu={{

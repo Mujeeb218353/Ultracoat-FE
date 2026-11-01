@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DollarSign, Download, Send, Upload as UploadIcon } from "lucide-react";
+import { DollarSign, Download, Eye, Send, Upload as UploadIcon } from "lucide-react";
 import { Button, InputNumber, Upload } from "antd";
 import type { UploadFile } from "antd";
 import SectionCard from "./SectionCard";
@@ -8,6 +8,7 @@ import useUploadQuotationFile from "../hooks/use-upload-quotation-file";
 import useSendQuotationToCustomer from "../hooks/use-send-quotation-to-customer";
 import useUpdateQuotationStatus from "../hooks/use-update-quotation-status";
 import useDownloadQuotationFile from "../hooks/use-download-quotation-file";
+import QuotationFileViewerModal from "./QuotationFileViewerModal";
 import { Quotation } from "../types/quotations.types";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/features/auth/selectors/auth.selector";
@@ -26,6 +27,7 @@ const QuotationActionsCard = ({ quotation }: Props) => {
   const canQuote = status === "PENDING" || status === "RE QUOTE";
 
   const [amount, setAmount] = useState<number | null>(quotation.amount ?? null);
+  const [viewerOpen, setViewerOpen] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const quoteAmount = useQuoteAmount(id);
@@ -110,13 +112,26 @@ const QuotationActionsCard = ({ quotation }: Props) => {
         )}
 
         {quotation.file && (
-          <Button 
-            icon={<Download size={14} />} 
-            loading={download.isPending} 
-            onClick={() => download.mutate()}
-          >
-            Download File
-          </Button>
+          <div className="flex flex-col gap-2">
+            <Button icon={<Eye size={14} />} onClick={() => setViewerOpen(true)}>
+              View File
+            </Button>
+            <Button
+              icon={<Download size={14} />}
+              loading={download.isPending}
+              onClick={() => download.mutate()}
+            >
+              Download File
+            </Button>
+            <QuotationFileViewerModal
+              id={id}
+              fileName={quotation.file}
+              open={viewerOpen}
+              onClose={() => setViewerOpen(false)}
+              onDownload={() => download.mutate()}
+              downloading={download.isPending}
+            />
+          </div>
         )}
 
         {status === "QUOTED" && isCreator && (
