@@ -35,6 +35,11 @@ body {
   box-sizing: border-box !important;
 }
 
+.ant-dropdown-menu {
+  max-height: 300px;
+  overflow-y: auto !important;
+}
+
 .ant-typography {
   margin-bottom: 0 !important;
 }

@@ -1,8 +1,9 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import GlobalProviders from "../components/providers/global-providers";
 import Alert from "@/components/Alert";
+import ServiceWorkerRegister from "@/components/providers/service-worker-register";
 import { App as AntdApp } from "antd";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 
@@ -16,7 +17,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  themeColor: "#001529",
+};
+
 export const metadata: Metadata = {
+  appleWebApp: {
+    capable: true,
+    title: "UltraCoat",
+    statusBarStyle: "default",
+  },
   title: {
     default: "UltraCoat Pakistan",
     template: "%s | UltraCoat Pakistan",
@@ -25,7 +35,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/ultra-coat-image.png",
     shortcut: "/ultra-coat-image.png",
-    apple: "/ultra-coat-image.png",
+    apple: "/icons/icon-192.png",
   },
   openGraph: {
     title: "UltraCoat Pakistan",
@@ -62,6 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <AntdApp>
             <GlobalProviders>
               <Alert />
+              <ServiceWorkerRegister />
               {children}
             </GlobalProviders>
           </AntdApp>
