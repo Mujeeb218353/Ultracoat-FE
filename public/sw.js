@@ -22,7 +22,6 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin || url.pathname.startsWith("/api/")) return;
 
-  // Pages are always fetched from the network (authenticated); offline shows a fallback page.
   if (request.mode === "navigate") {
     event.respondWith(fetch(request).catch(() => caches.match(OFFLINE_URL)));
     return;
@@ -39,4 +38,40 @@ self.addEventListener("fetch", (event) => {
       })),
     );
   }
+});
+
+self.addEventListener("push", (event) => {
+  let payload = {};
+  try {
+    payload = event.data ? event.data.json() : {};
+  } catch {
+    payload = { notification: { body: event.data?.text() } };
+  }
+  const { title = "Ultracoat", body = "", image } = payload.notification || {};
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body,
+      image,
+      icon: "/icons/icon-192.png",
+      badge: "/icons/icon-192.png",
+      data: payload.data || {},
+    }),
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+
+  const target = new URL(event.notification.data?.url || "/", self.location.origin).href;
+
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (clients) => {
+      const open = clients.find((c) => c.url.startsWith(self.location.origin));
+      if (open) {
+        await open.focus();
+        return open.navigate(target);
+      }
+      return self.clients.openWindow(target);
+    }),
+  );
 });

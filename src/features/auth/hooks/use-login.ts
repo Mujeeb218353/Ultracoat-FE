@@ -4,6 +4,7 @@ import authApi from "../api/auth.api";
 import { useSetUser, useSetIsAuthenticated } from "../selectors/auth.selector";
 import { LoginRequest } from "../types/auth.types";
 import useAlert from "@/features/alert/hooks/use-alert";
+import useRegisterDevice from "@/features/notification/hooks/use-register-device";
 import { resetAbortController } from "@/utils/abort-controller";
 
 const useLogin = () => {
@@ -11,9 +12,11 @@ const useLogin = () => {
   const setUser = useSetUser();
   const setIsAuthenticated = useSetIsAuthenticated();
   const { success, error } = useAlert();
+  const { mutate: registerDevice } = useRegisterDevice();
 
   return useMutation({
     mutationFn: (payload: LoginRequest) => authApi.login(payload),
+
     onSuccess: (data) => {
       if(data.user.role !== "ADMIN"){
         error("Access denied. You do not have permission to access this application.");
@@ -23,6 +26,7 @@ const useLogin = () => {
       success("Login successful!");
       setIsAuthenticated(data.accessToken, data.refreshToken);
       setUser(data.user);
+      registerDevice();
       router.push("/dashboard");
       router.refresh();
     },
