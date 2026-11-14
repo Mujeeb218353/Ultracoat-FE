@@ -69,6 +69,10 @@ const pageHeaderData: Record<string, PageHeaderData> = {
     title: "Feedback",
     description: "Monitor customer feedback and satisfaction by sales representative",
   },
+  notifications: {
+    title: "Notifications",
+    description: "View and manage your unread notifications",
+  },
   "finished-jobs": {
     title: "Finished Jobs",
     description: "Archive of completed projects and deliverables",

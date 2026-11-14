@@ -1,7 +1,9 @@
 import { useHasHydrated } from "@/features/auth/selectors/auth.selector";
 import { useThemeMode } from "@/features/theme/selector/theme.selector";
-import { Avatar, Button, Layout } from "antd";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Avatar, Badge, Button, Layout } from "antd";
+import { Bell, ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import useNotifications from "@/features/notification/hooks/use-notifications";
 import NavbarSkeleton from "./skeletons/NavbarSkeleton";
 import ThemeToggle from "./ThemeToggler";
 const { Header } = Layout;
@@ -20,6 +22,7 @@ interface NavbarProps {
 const Navbar = ({ collapsed, setCollapsed, toggleBtnRef, isMobile, user }: NavbarProps) => {
   const hasHydrated = useHasHydrated();
   const mode = useThemeMode();
+  const { data: notifications } = useNotifications(0, 10, true);
   const headerBackground = mode === "light" ? "#ffffff" : "#222222";
 
   if (!hasHydrated) {
@@ -44,8 +47,13 @@ const Navbar = ({ collapsed, setCollapsed, toggleBtnRef, isMobile, user }: Navba
         }}
         icon={collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
       />
-      <div className="flex justify-around items-center gap-4 ml-4">
-        <div className="flex items-center gap-2 cursor-pointer">
+      <div className="flex justify-center items-center gap-4 ml-4">
+        <div className="flex items-center gap-2 cursor-pointer mt-4">
+        <Link href="/notifications" aria-label="Notifications">
+          <Badge count={notifications?.unreadCount} size="small" className="flex! justify-center! items-center!">
+            <Button type="text" aria-label="Open notifications" className="p-1! h-8! w-8! rounded-full! transition-all! duration-500! ease-in-out! border-none! bg-white! hover:bg-gray-100! dark:bg-zinc-900! dark:hover:bg-zinc-800! text-black! dark:text-white!" icon={<Bell size={20} />} />
+          </Badge>
+        </Link>
           <ThemeToggle />
           <Avatar
             size={30}
