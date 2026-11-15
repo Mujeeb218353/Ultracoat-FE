@@ -40,7 +40,6 @@ const NotificationsList = () => {
         title="Unread notifications"
         extra={
           <Button
-            type="primary"
             disabled={!data?.unreadCount || isUpdating}
             loading={markAllRead.isPending}
             onClick={() => markAllRead.mutate(undefined, { onSuccess: () => setSkip(0) })}
