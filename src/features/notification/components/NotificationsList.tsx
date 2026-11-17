@@ -77,7 +77,7 @@ const NotificationsList = () => {
                     <div className="min-w-0">
                       <Space wrap>
                         <span className="font-semibold">{notification.title}</span>
-                        <Tag color="blue">Unread</Tag>
+                        {!notification.isRead && (<Tag color="blue">Unread</Tag>)}
                       </Space>
                       <p className="mt-1 whitespace-pre-wrap wrap-break-word">{notification.body}</p>
                       <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
@@ -88,7 +88,7 @@ const NotificationsList = () => {
                       {notification.link && (
                         <Button onClick={() => openLink(notification.link!)}>View</Button>
                       )}
-                      <Button
+                      {!notification.isRead && (<Button
                         disabled={isUpdating}
                         loading={markRead.isPending && markRead.variables === notification.id}
                         onClick={() =>
@@ -102,7 +102,7 @@ const NotificationsList = () => {
                         }
                       >
                         Mark as read
-                      </Button>
+                      </Button>)}
                     </Space>
                   </div>
                 )}
